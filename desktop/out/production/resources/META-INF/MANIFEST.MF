@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Main-Class: com.mygdx.game.DesktopLauncher
+Class-Path: lwjgl-opengl-3.3.2-natives-windows-x86.jar lwjgl-openal-3.3.
+ 2-natives-linux.jar lwjgl-glfw-3.3.2-natives-windows.jar lwjgl-stb-3.3.
+ 2-natives-linux-arm32.jar gdx-platform-1.12.0-natives-desktop.jar lwjgl
+ -3.3.2-natives-linux-arm64.jar lwjgl-opengl-3.3.2-natives-windows.jar l
+ wjgl-3.3.2-natives-windows-x86.jar lwjgl-glfw-3.3.2-natives-macos-arm64
+ .jar lwjgl-jemalloc-3.3.2-natives-windows.jar lwjgl-openal-3.3.2-native
+ s-windows-x86.jar lwjgl-stb-3.3.2-natives-macos-arm64.jar lwjgl-jemallo
+ c-3.3.2-natives-windows-x86.jar lwjgl-stb-3.3.2.jar lwjgl-3.3.2-natives
+ -linux.jar lwjgl-glfw-3.3.2-natives-macos.jar lwjgl-jemalloc-3.3.2-nati
+ ves-linux-arm32.jar lwjgl-3.3.2-natives-macos.jar lwjgl-stb-3.3.2-nativ
+ es-windows-x86.jar lwjgl-jemalloc-3.3.2-natives-macos-arm64.jar lwjgl-o
+ penal-3.3.2-natives-macos.jar lwjgl-jemalloc-3.3.2-natives-macos.jar lw
+ jgl-opengl-3.3.2-natives-linux-arm32.jar gdx-jnigen-loader-2.3.1.jar lw
+ jgl-openal-3.3.2-natives-linux-arm64.jar lwjgl-openal-3.3.2-natives-mac
+ os-arm64.jar lwjgl-openal-3.3.2.jar lwjgl-stb-3.3.2-natives-macos.jar l
+ wjgl-opengl-3.3.2-natives-macos.jar lwjgl-glfw-3.3.2-natives-linux-arm6
+ 4.jar lwjgl-glfw-3.3.2-natives-windows-x86.jar lwjgl-3.3.2.jar lwjgl-op
+ enal-3.3.2-natives-windows.jar gdx-freetype-1.12.0.jar gdx-box2d-platfo
+ rm-1.12.0-natives-desktop.jar lwjgl-openal-3.3.2-natives-linux-arm32.ja
+ r lwjgl-jemalloc-3.3.2-natives-linux-arm64.jar jorbis-0.0.17.jar lwjgl-
+ opengl-3.3.2-natives-linux.jar lwjgl-opengl-3.3.2-natives-linux-arm64.j
+ ar lwjgl-3.3.2-natives-linux-arm32.jar gdx-backend-lwjgl3-1.12.0.jar lw
+ jgl-glfw-3.3.2-natives-linux.jar lwjgl-glfw-3.3.2.jar lwjgl-glfw-3.3.2-
+ natives-linux-arm32.jar lwjgl-stb-3.3.2-natives-linux-arm64.jar lwjgl-o
+ pengl-3.3.2-natives-macos-arm64.jar jlayer-1.0.1-gdx.jar gdx-freetype-p
+ latform-1.12.0-natives-desktop.jar lwjgl-jemalloc-3.3.2.jar lwjgl-jemal
+ loc-3.3.2-natives-linux.jar lwjgl-stb-3.3.2-natives-windows.jar lwjgl-3
+ .3.2-natives-windows.jar gdx-1.12.0.jar lwjgl-opengl-3.3.2.jar gdx-box2
+ d-1.12.0.jar lwjgl-3.3.2-natives-macos-arm64.jar lwjgl-stb-3.3.2-native
+ s-linux.jar
+

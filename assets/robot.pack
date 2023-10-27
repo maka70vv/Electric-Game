@@ -1,0 +1,26 @@
+
+robot.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+робот-надпись1
+  rotate: false
+  xy: 1, 15
+  size: 464, 48
+  orig: 464, 48
+  offset: 0, 0
+  index: -1
+робот-уборщик1
+  rotate: false
+  xy: 467, 31
+  size: 68, 32
+  orig: 68, 32
+  offset: 0, 0
+  index: -1
+робот-уборщик поломанный
+  rotate: false
+  xy: 1, 1
+  size: 16, 12
+  orig: 16, 12
+  offset: 0, 0
+  index: -1
