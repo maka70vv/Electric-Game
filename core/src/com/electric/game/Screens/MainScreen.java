@@ -32,6 +32,7 @@ public class MainScreen implements Screen {
     private final ElectricGame game;
     private final TextureAtlas atlas;
     private final TextureAtlas atlasRobot;
+    private final TextureAtlas atlasPers;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -55,6 +56,7 @@ public class MainScreen implements Screen {
     public MainScreen(ElectricGame game){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         atlasRobot = new TextureAtlas("robot.pack");
+        atlasPers = new TextureAtlas("pers.pack");
 
         main = true;
         ParallelScreen.parallel = false;
@@ -94,6 +96,10 @@ public class MainScreen implements Screen {
         return atlasRobot;
     }
 
+    public TextureAtlas getAtlasPers(){
+        return atlasPers;
+    }
+
     public void spawnItem(ItemDef idef){
         itemsToSpawn.add(idef);
     }
@@ -121,9 +127,9 @@ public class MainScreen implements Screen {
             if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W) ))
                 player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+                player.b2body.applyLinearImpulse(new Vector2(0.05f, 0), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+                player.b2body.applyLinearImpulse(new Vector2(-0.05f, 0), player.b2body.getWorldCenter(), true);
         }
     }
 
@@ -186,7 +192,7 @@ public class MainScreen implements Screen {
 
 
 
-        if (WorldContactListener.redirectParallel && Gdx.input.isKeyJustPressed(Input.Keys.E)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
             playerX = player.b2body.getPosition().x;
             playerY = player.b2body.getPosition().y;
             game.setScreen(new ParallelScreen(game));

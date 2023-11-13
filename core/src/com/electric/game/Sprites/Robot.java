@@ -54,9 +54,7 @@ public class Robot extends Enemy {
                 ElectricGame.COIN_BIT |
                 ElectricGame.ENEMY_BIT |
                 ElectricGame.OBJECT_BIT |
-                ElectricGame.PARALLEL_BIT |
-                ElectricGame.MARIO_BIT;
-
+                ElectricGame.PARALLEL_BIT;
         fdef.shape = shape;
         fdef.restitution = 0.5f;
         b2body.createFixture(fdef).setUserData(this);

@@ -56,8 +56,8 @@ public class Mario extends Sprite {
 // in main screen
         if (main && !parallel) {
 //            run
-            for (int i = 1; i < 4; i++) {
-                frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+            for (int i = 0; i < 8; i++) {
+                frames.add(new TextureRegion(screen.getAtlasPers().findRegion("персонаж"), i * 16, 0, 16, 32));
             }
             marioRun = new Animation<TextureRegion>(0.1f, frames);
 
@@ -74,7 +74,7 @@ public class Mario extends Sprite {
             bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 80, 0, 16, 32);
 
 
-            marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
+            marioStand = new TextureRegion(screen.getAtlasPers().findRegion("персонаж_стоит"), 0, 0, 17, 32);
             bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
 
             marioDead = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
@@ -137,12 +137,13 @@ public class Mario extends Sprite {
         } else {
             setCenter(b2body.getPosition().x, b2body.getPosition().y);
         }
+
         setRegion(getFrame(dt));
-        if (timeToDefineBigMario){
-            defineBigMario();
-        } else if (timeToRedefineMario) {
-            redefineMario();
-        }
+//        if (timeToDefineBigMario){
+//            defineBigMario();
+//        } else if (timeToRedefineMario) {
+//            redefineMario();
+//        }
         if (b2body.getPosition().y < 0){
             marioIsDead = true;
         }
@@ -171,6 +172,7 @@ public class Mario extends Sprite {
             case FALLING:
             case STANDING:
             default:
+                setSize(0.16f, 0.32f);
                 region = marioIsBig ? bigMarioStand : marioStand;
                 break;
 
@@ -205,54 +207,54 @@ public class Mario extends Sprite {
 
 
 
-    public void defineBigMario(){
-        Vector2 currentPosition = b2body.getPosition();
-        world.destroyBody(b2body);
-
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(currentPosition.add(0, 10/ElectricGame.PPM));
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / ElectricGame.PPM);
-        fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
-        fdef.filter.maskBits = ElectricGame.GROUND_BIT |
-                ElectricGame.COIN_BIT |
-                ElectricGame.ENEMY_BIT |
-                ElectricGame.OBJECT_BIT |
-                ElectricGame.ENEMY_HEAD_BIT |
-                ElectricGame.ITEM_BIT |
-                ElectricGame.PARALLEL_BIT
-        ;
-
-        fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0, -14/ElectricGame.PPM));
-        b2body.createFixture(fdef).setUserData(this);
-
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2/ElectricGame.PPM, 6/ElectricGame.PPM), new Vector2(2/ElectricGame.PPM, 6/ElectricGame.PPM));
-        fdef.filter.categoryBits = ElectricGame.MARIO_HEAD_BIT;
-        fdef.shape = head;
-        fdef.isSensor = true;
-
-        b2body.createFixture(fdef).setUserData(this);
-        timeToDefineBigMario = false;
-    }
+//    public void defineBigMario(){
+//        Vector2 currentPosition = b2body.getPosition();
+//        world.destroyBody(b2body);
+//
+//        BodyDef bdef = new BodyDef();
+//        bdef.position.set(currentPosition.add(0, 10/ElectricGame.PPM));
+//        bdef.type = BodyDef.BodyType.DynamicBody;
+//        b2body = world.createBody(bdef);
+//
+//        FixtureDef fdef = new FixtureDef();
+//
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(32 / ElectricGame.PPM);
+//        fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
+//        fdef.filter.maskBits = ElectricGame.GROUND_BIT |
+//                ElectricGame.COIN_BIT |
+//                ElectricGame.ENEMY_BIT |
+//                ElectricGame.OBJECT_BIT |
+//                ElectricGame.ENEMY_HEAD_BIT |
+//                ElectricGame.ITEM_BIT |
+//                ElectricGame.PARALLEL_BIT
+//        ;
+//
+//        fdef.shape = shape;
+//        b2body.createFixture(fdef).setUserData(this);
+//        shape.setPosition(new Vector2(0, -14/ElectricGame.PPM));
+//        b2body.createFixture(fdef).setUserData(this);
+//
+//        EdgeShape head = new EdgeShape();
+//        head.set(new Vector2(-2/ElectricGame.PPM, 6/ElectricGame.PPM), new Vector2(2/ElectricGame.PPM, 6/ElectricGame.PPM));
+//        fdef.filter.categoryBits = ElectricGame.MARIO_HEAD_BIT;
+//        fdef.shape = head;
+//        fdef.isSensor = true;
+//
+//        b2body.createFixture(fdef).setUserData(this);
+//        timeToDefineBigMario = false;
+//    }
 
     public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / ElectricGame.PPM, 32 / ElectricGame.PPM);
+        bdef.position.set(32/ElectricGame.PPM, 30/ElectricGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / ElectricGame.PPM);
+//
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(1 / ElectricGame.PPM);
         fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
                 ElectricGame.COIN_BIT |
@@ -261,18 +263,25 @@ public class Mario extends Sprite {
                 ElectricGame.ENEMY_HEAD_BIT |
                 ElectricGame.ITEM_BIT |
                 ElectricGame.PARALLEL_BIT
-
         ;
 
-        fdef.shape = shape;
+//        fdef.shape = shape;
+//        b2body.createFixture(fdef).setUserData(this);
+//        shape.setPosition(new Vector2(0, -14/ElectricGame.PPM));
+//        b2body.createFixture(fdef).setUserData(this);
+
+        PolygonShape body = new PolygonShape();
+        Vector2[] vertice = new Vector2[4];
+
+        vertice[0] = new Vector2(-8.5f, -16).scl(1 / ElectricGame.PPM);
+        vertice[1] = new Vector2(8.5f, -16).scl(1 / ElectricGame.PPM);
+        vertice[2] = new Vector2(-8.5f, 16).scl(1 / ElectricGame.PPM);
+        vertice[3] = new Vector2(8.5f, 16).scl(1 / ElectricGame.PPM);
+        body.set(vertice);
+        fdef.shape = body;
         b2body.createFixture(fdef).setUserData(this);
-
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2/ElectricGame.PPM, 6/ElectricGame.PPM), new Vector2(2/ElectricGame.PPM, 6/ElectricGame.PPM));
-        fdef.filter.categoryBits = ElectricGame.MARIO_HEAD_BIT;
-        fdef.shape = head;
-        fdef.isSensor = true;
-
+        fdef.restitution = 0.5f;
+        fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
         b2body.createFixture(fdef).setUserData(this);
     }
     public boolean isBig() {
