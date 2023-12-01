@@ -9,9 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Screens.ParallelScreen;
 
+import static com.electric.game.Screens.KanalizatiaScreen.kanalizatia;
 import static com.electric.game.Screens.MainScreen.main;
 import static com.electric.game.Screens.ParallelScreen.*;
 
@@ -41,11 +43,13 @@ public class Mario extends Sprite {
 
 
 
-    public Mario(MainScreen screen, ParallelScreen parallelScreen) {
-        if (main && !parallel) {
+    public Mario(MainScreen screen, ParallelScreen parallelScreen, KanalizatiaScreen kanalizatiaScreen) {
+        if (main && !parallel && !kanalizatia) {
             this.world = screen.getWorld();
-        } else if (parallel && !main) {
+        } else if (parallel && !main && !kanalizatia) {
             this.world = parallelScreen.getWorld();
+        } else if (kanalizatia && !main && !parallel) {
+            this.world = kanalizatiaScreen.getWorld();
         }
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -54,7 +58,7 @@ public class Mario extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 // in main screen
-        if (main && !parallel) {
+        if (main && !parallel && !kanalizatia) {
 //            run
             for (int i = 0; i < 8; i++) {
                 frames.add(new TextureRegion(screen.getAtlasPers().findRegion("персонаж"), i * 16, 0, 16, 32));
@@ -92,7 +96,7 @@ public class Mario extends Sprite {
             growMario = new Animation<>(0.2f, frames);
         }
 // in parallel screen
-        else if (parallel && !main) {
+        else if (parallel && !main && !kanalizatia) {
 //            run
             for (int i = 1; i < 4; i++) {
                 frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
@@ -128,6 +132,30 @@ public class Mario extends Sprite {
             frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
             frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
             growMario = new Animation<>(0.2f, frames);
+        }
+
+    // in kanalizatia screen
+        else if (!parallel && !main && kanalizatia) {
+            for (int i = 0; i < 8; i++) {
+                frames.add(new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж"), i * 16, 0, 16, 32));
+            }
+            marioRun = new Animation<TextureRegion>(0.1f, frames);
+
+            frames.clear();
+
+
+            marioStand = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 0, 0, 17, 32);
+
+            marioJump = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 80, 0, 16, 16);
+
+            marioDead = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 96, 0, 16, 16);
+
+
+            defineMario();
+
+            setBounds(0, 0, 16 / ElectricGame.PPM, 16 / ElectricGame.PPM);
+            setRegion(marioStand);
+            ;
         }
     }
 
@@ -247,7 +275,7 @@ public class Mario extends Sprite {
 
     public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32/ElectricGame.PPM, 30/ElectricGame.PPM);
+        bdef.position.set(32/ElectricGame.PPM, 32/ElectricGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -262,7 +290,9 @@ public class Mario extends Sprite {
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.ENEMY_HEAD_BIT |
                 ElectricGame.ITEM_BIT |
-                ElectricGame.PARALLEL_BIT
+                ElectricGame.PARALLEL_BIT |
+                ElectricGame.LESTNITSA_BIT |
+                ElectricGame.STORY_BIT
         ;
 
 //        fdef.shape = shape;
@@ -271,12 +301,14 @@ public class Mario extends Sprite {
 //        b2body.createFixture(fdef).setUserData(this);
 
         PolygonShape body = new PolygonShape();
-        Vector2[] vertice = new Vector2[4];
+        Vector2[] vertice = new Vector2[6];
 
-        vertice[0] = new Vector2(-8.5f, -16).scl(1 / ElectricGame.PPM);
-        vertice[1] = new Vector2(8.5f, -16).scl(1 / ElectricGame.PPM);
-        vertice[2] = new Vector2(-8.5f, 16).scl(1 / ElectricGame.PPM);
-        vertice[3] = new Vector2(8.5f, 16).scl(1 / ElectricGame.PPM);
+        vertice[0] = new Vector2(-4, -14).scl(1 / ElectricGame.PPM);
+        vertice[1] = new Vector2(4, -14).scl(1 / ElectricGame.PPM);
+        vertice[2] = new Vector2(-8.5f, 0).scl(1 / ElectricGame.PPM);
+        vertice[3] = new Vector2(8.5f, 0).scl(1 / ElectricGame.PPM);
+        vertice[4] = new Vector2(-2, 14).scl(1 / ElectricGame.PPM);
+        vertice[5] = new Vector2(2, 14).scl(1 / ElectricGame.PPM);
         body.set(vertice);
         fdef.shape = body;
         b2body.createFixture(fdef).setUserData(this);

@@ -48,6 +48,7 @@ public class MainScreen implements Screen {
     private final LinkedBlockingQueue<ItemDef> itemsToSpawn;
     public static boolean main;
     private ParallelScreen parallelScreen;
+    private KanalizatiaScreen kanalizatiaScreen;
     private static float playerX;
     private static float playerY;
 
@@ -74,9 +75,9 @@ public class MainScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
-        creator = new B2WorldCreator(this);
+        creator = new B2WorldCreator(this, kanalizatiaScreen);
 
-        player = new Mario(this, parallelScreen);
+        player = new Mario(this, parallelScreen, kanalizatiaScreen);
         if (playerX > 0 && !ParallelScreen.wasDead)
             player.b2body.setTransform(playerX, playerY, 0);
         else

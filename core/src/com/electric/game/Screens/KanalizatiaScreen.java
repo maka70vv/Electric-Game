@@ -16,13 +16,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
 import com.electric.game.Sprites.Mario;
+import com.electric.game.Tools.KanalizationWorldCreator;
 import com.electric.game.Tools.ParallelWorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
-public class ParallelScreen implements Screen {
+public class KanalizatiaScreen implements Screen {
     private final ElectricGame game;
     private final TextureAtlas atlas;
-    private final TextureAtlas atlasRobot;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -31,39 +31,39 @@ public class ParallelScreen implements Screen {
 
     private final World world;
     private final Box2DDebugRenderer b2dr;
-    private final ParallelWorldCreator creator;
+    private final KanalizationWorldCreator creator;
     private final Mario player;
     private final Music music;
 
-    public static boolean parallel;
+    public static boolean kanalizatia;
     private MainScreen mainScreen;
-    private KanalizatiaScreen kanalizatiaScreen;
+    private ParallelScreen parallelScreen;
     public static boolean wasDead;
 
 
-    public ParallelScreen(ElectricGame game){
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
-        atlasRobot = new TextureAtlas("robot.pack");
+    public KanalizatiaScreen(ElectricGame game){
+        atlas = new TextureAtlas("pers.pack");
 
-        parallel = true;
+        ParallelScreen.parallel = false;
         MainScreen.main = false;
+        kanalizatia=true;
 
         this.game = game;
         gameCam = new OrthographicCamera();
         gameport = new FitViewport(ElectricGame.V_WIDTH/ElectricGame.PPM, ElectricGame.V_HEIGHT/ElectricGame.PPM, gameCam);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level2.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / ElectricGame.PPM);
+        map = mapLoader.load("kanalizatia.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map,1 / ElectricGame.PPM);
         gameCam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
 
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
-        creator = new ParallelWorldCreator(this);
+        creator = new KanalizationWorldCreator(this, mainScreen);
 
-        player = new Mario(mainScreen, this, kanalizatiaScreen);
+        player = new Mario(mainScreen, parallelScreen, this);
 
         world.setContactListener(new WorldContactListener());
 
@@ -73,12 +73,6 @@ public class ParallelScreen implements Screen {
 
 
     }
-
-    public TextureAtlas getAtlasRobot(){
-        return atlasRobot;
-    }
-
-
 
     public TextureAtlas getAtlas(){
         return atlas;

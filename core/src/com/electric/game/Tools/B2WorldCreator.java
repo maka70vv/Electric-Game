@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Sprites.*;
 
@@ -23,7 +24,7 @@ public class B2WorldCreator {
     }
 
 
-    public B2WorldCreator(MainScreen screen){
+    public B2WorldCreator(MainScreen screen, KanalizatiaScreen kanalizatiaScreen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         BodyDef bdef = new BodyDef();
@@ -49,21 +50,21 @@ public class B2WorldCreator {
         for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new Coin(screen, rect);
+            new Coin(screen, rect, kanalizatiaScreen);
         }
 
 //        create platform bodies/fixtures
         for(MapObject object:map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new Platform(screen, rect);
+            new Platform(screen, rect, kanalizatiaScreen);
         }
 
 //        create redirect platform bodies/fixtures
         for(MapObject object:map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new RedirectPlatform(screen, rect);
+            new RedirectPlatform(screen, rect, kanalizatiaScreen);
         }
 
 

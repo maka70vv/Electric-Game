@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.electric.game.Screens.GameOverScreen;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Screens.ParallelScreen;
 import com.electric.game.Tools.WorldContactListener;
@@ -31,6 +32,8 @@ public class ElectricGame extends Game {
 	public static final short ENEMY_HEAD_BIT = 128;
 	public static final short ITEM_BIT = 256;
 	public static final short MARIO_HEAD_BIT = 512;
+	public static final short LESTNITSA_BIT = 1024;
+	public static final short STORY_BIT = 2048;
 
 	public SpriteBatch batch;
 
@@ -50,7 +53,7 @@ public class ElectricGame extends Game {
 		manager.load("audio/sounds/powerdown.wav", Sound.class);
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
 		manager.finishLoading();
-		setScreen(new MainScreen(this));
+		setScreen(new KanalizatiaScreen(this));
 	}
 
 	@Override

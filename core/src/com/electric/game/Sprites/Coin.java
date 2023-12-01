@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.electric.game.ElectricGame;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Scenes.Hud;
 import com.electric.game.Screens.ParallelScreen;
@@ -35,8 +36,8 @@ public class Coin extends InteractiveTileObject {
         Hud.addScore(100);
     }
 
-    public Coin(MainScreen screen, Rectangle bounds){
-        super(screen, bounds);
+    public Coin(MainScreen screen, Rectangle bounds, KanalizatiaScreen kanalizatiaScreen){
+        super(screen, bounds, kanalizatiaScreen);
         tileSet = map.getTileSets().getTileSet("tileset_gutter");
         fixture.setUserData(this);
         setCategoryFilter(ElectricGame.COIN_BIT);
