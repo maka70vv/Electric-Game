@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 
 public abstract class Item extends Sprite {
     protected MainScreen screen;
@@ -29,7 +29,7 @@ public abstract class Item extends Sprite {
     }
 
     public abstract void defineItem();
-    public abstract void use(Mario mario);
+    public abstract void use(Electic electic);
 
     public void update(float dt){
         if(toDestroy && !destroyed){

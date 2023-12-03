@@ -34,10 +34,14 @@ public class ElectricGame extends Game {
 	public static final short MARIO_HEAD_BIT = 512;
 	public static final short LESTNITSA_BIT = 1024;
 	public static final short STORY_BIT = 2048;
+	public static final short END_MAP_BIT = 4096;
+
 
 	public SpriteBatch batch;
 
 	public static AssetManager manager;
+	public static boolean robotBroken = false;
+
 
 	@Override
 	public void create () {
@@ -53,7 +57,7 @@ public class ElectricGame extends Game {
 		manager.load("audio/sounds/powerdown.wav", Sound.class);
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
 		manager.finishLoading();
-		setScreen(new KanalizatiaScreen(this));
+		setScreen(new MainScreen(this));
 	}
 
 	@Override

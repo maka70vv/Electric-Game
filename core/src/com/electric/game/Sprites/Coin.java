@@ -9,7 +9,6 @@ import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Scenes.Hud;
-import com.electric.game.Screens.ParallelScreen;
 import com.electric.game.Sprites.Items.ItemDef;
 import com.electric.game.Sprites.Items.Mushroom;
 
@@ -19,7 +18,7 @@ public class Coin extends InteractiveTileObject {
     public static int mushrooms = 0;
 
     @Override
-    public void onHeadHit(Mario mario) {
+    public void onHeadHit(Electic electic) {
         Gdx.app.log("Coin", "Collision");
         if (getCell().getTile().getId() == BLANK_COIN) {
             ElectricGame.manager.get("audio/sounds/bump.wav", Sound.class).play();

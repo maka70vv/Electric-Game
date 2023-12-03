@@ -14,7 +14,7 @@ public class LestnitsaPlatform extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit(Mario mario) {
+    public void onHeadHit(Electic electic) {
 
     }
 }

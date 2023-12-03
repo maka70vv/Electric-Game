@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 import com.electric.game.Tools.ParallelWorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
@@ -32,7 +32,7 @@ public class ParallelScreen implements Screen {
     private final World world;
     private final Box2DDebugRenderer b2dr;
     private final ParallelWorldCreator creator;
-    private final Mario player;
+    private final Electic player;
     private final Music music;
 
     public static boolean parallel;
@@ -63,7 +63,7 @@ public class ParallelScreen implements Screen {
 
         creator = new ParallelWorldCreator(this);
 
-        player = new Mario(mainScreen, this, kanalizatiaScreen);
+        player = new Electic(mainScreen, this, kanalizatiaScreen);
 
         world.setContactListener(new WorldContactListener());
 
@@ -90,7 +90,7 @@ public class ParallelScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
                 player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
@@ -106,7 +106,7 @@ public class ParallelScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         player.update(dt);
 
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if (gameCam.position.x < player.b2body.getPosition().x) {
                 gameCam.position.x = player.b2body.getPosition().x;
             } else if (player.b2body.getPosition().x > 2) {
@@ -150,7 +150,7 @@ public class ParallelScreen implements Screen {
     }
 
     public boolean gameOver(){
-        return player.currentState == Mario.State.DEAD && player.getStateTimer() > 3;
+        return player.currentState == Electic.State.DEAD && player.getStateTimer() > 3;
     }
 
     @Override

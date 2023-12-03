@@ -15,7 +15,7 @@ public class RedirectPlatform extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit(Mario mario) {
+    public void onHeadHit(Electic electic) {
 
     }
 }

@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Tools.WorldContactListener;
 
 public class RobotTable extends Enemy {
     private float stateTime;
@@ -72,7 +71,7 @@ public class RobotTable extends Enemy {
     }
 
     @Override
-    public void hitOnHead(Mario mario) {
+    public void hitOnHead(Electic electic) {
 
     }
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.electric.game.ElectricGame;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 
 public class GameOverScreen implements Screen {
     private final ElectricGame game;
@@ -55,7 +55,7 @@ public class GameOverScreen implements Screen {
         font.draw(batch, "Game Over!", 300, 300);
         font.draw(batch, "Tap to restart", 300, 250);
         batch.end();
-        Mario.marioIsDead = false;
+        Electic.electricIsDead = false;
         if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))
             game.setScreen(new MainScreen(game));
 

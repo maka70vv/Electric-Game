@@ -1,17 +1,17 @@
 package com.electric.game.Tools;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.physics.box2d.*;
 import com.electric.game.ElectricGame;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.InteractiveTileObject;
 import com.electric.game.Sprites.Items.Item;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 
 public class WorldContactListener implements ContactListener {
     public static boolean redirectParallel;
     public static boolean redirectMain;
+    public static boolean climb;
 
     @Override
     public void beginContact(Contact contact) {
@@ -19,23 +19,31 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
         redirectParallel = false;
         redirectMain = false;
+        climb = false;
 
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
+            case ElectricGame.MARIO_BIT | ElectricGame.LESTNITSA_BIT:
+                climb = true;
+                break;
+            case ElectricGame.MARIO_BIT | ElectricGame.END_MAP_BIT:
+                if (KanalizatiaScreen.kanalizatia)
+                    redirectMain = true;
+                break;
 
             case ElectricGame.MARIO_HEAD_BIT | ElectricGame.COIN_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.MARIO_HEAD_BIT)
-                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
+                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Electic) fixA.getUserData());
                 else
-                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
+                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Electic) fixB.getUserData());
                 break;
             case ElectricGame.MARIO_BIT | ElectricGame.COIN_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.MARIO_BIT) {
-                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
+                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Electic) fixA.getUserData());
                 }
                 else{
-                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
+                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Electic) fixB.getUserData());
                 }
                 break;
             case ElectricGame.MARIO_BIT | ElectricGame.OBJECT_BIT:
@@ -51,9 +59,9 @@ public class WorldContactListener implements ContactListener {
 //                break;
             case ElectricGame.ENEMY_HEAD_BIT | ElectricGame.MARIO_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ENEMY_HEAD_BIT)
-                    ((Enemy) fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
+                    ((Enemy) fixA.getUserData()).hitOnHead((Electic) fixB.getUserData());
                 else
-                    ((Enemy) fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
+                    ((Enemy) fixB.getUserData()).hitOnHead((Electic) fixA.getUserData());
                 break;
             case ElectricGame.ENEMY_BIT | ElectricGame.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ENEMY_BIT)
@@ -79,9 +87,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case ElectricGame.ITEM_BIT | ElectricGame.MARIO_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ITEM_BIT)
-                    ((Item) fixA.getUserData()).use((Mario) fixB.getUserData());
+                    ((Item) fixA.getUserData()).use((Electic) fixB.getUserData());
                 else
-                    ((Item) fixB.getUserData()).use((Mario) fixA.getUserData());
+                    ((Item) fixB.getUserData()).use((Electic) fixA.getUserData());
                 break;
         }
     }

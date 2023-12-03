@@ -58,5 +58,11 @@ public class KanalizationWorldCreator {
             new StoryPlatform(screen, rect, mainScreen);
         }
 
+        for(MapObject object:map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new EndMap(screen, rect, mainScreen);
+        }
+
     }
 }

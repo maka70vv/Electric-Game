@@ -1,6 +1,5 @@
 package com.electric.game.Sprites;
 
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
@@ -15,7 +14,7 @@ public class Platform extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit(Mario mario) {
+    public void onHeadHit(Electic electic) {
 
     }
 }

@@ -8,7 +8,7 @@ import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 import com.electric.game.Scenes.Hud;
 
-public class Brick extends InteractiveTileObject{
+public class Brick extends InteractiveTileObject {
     public Brick(MainScreen screen, Rectangle bounds, KanalizatiaScreen kanalizatiaScreen) {
         super(screen, bounds, kanalizatiaScreen);
         fixture.setUserData(this);
@@ -16,16 +16,13 @@ public class Brick extends InteractiveTileObject{
     }
 
     @Override
-    public void onHeadHit(Mario mario) {
-        if (mario.isBig()) {
-            Gdx.app.log("Brick", "Collision");
-            setCategoryFilter(ElectricGame.DESTROYED_BIT);
-            getCell().setTile(null);
-            Hud.addScore(200);
-            ElectricGame.manager.get("audio/sounds/breakblock.wav", Sound.class).play();
-        } else {
-            ElectricGame.manager.get("audio/sounds/bump.wav", Sound.class).play();
+    public void onHeadHit(Electic electic) {
 
-        }
+        Gdx.app.log("Brick", "Collision");
+        setCategoryFilter(ElectricGame.DESTROYED_BIT);
+        getCell().setTile(null);
+        Hud.addScore(200);
+        ElectricGame.manager.get("audio/sounds/breakblock.wav", Sound.class).play();
+
     }
 }

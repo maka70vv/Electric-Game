@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 
 public class Mushroom extends Item {
     public Mushroom(MainScreen screen, float x, float y) {
@@ -37,7 +37,7 @@ public class Mushroom extends Item {
     }
 
     @Override
-    public void use(Mario mario) {
+    public void use(Electic electic) {
         destroy();
     }
 

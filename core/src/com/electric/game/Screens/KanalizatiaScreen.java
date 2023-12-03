@@ -15,9 +15,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 import com.electric.game.Tools.KanalizationWorldCreator;
-import com.electric.game.Tools.ParallelWorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
 public class KanalizatiaScreen implements Screen {
@@ -32,7 +31,7 @@ public class KanalizatiaScreen implements Screen {
     private final World world;
     private final Box2DDebugRenderer b2dr;
     private final KanalizationWorldCreator creator;
-    private final Mario player;
+    private final Electic player;
     private final Music music;
 
     public static boolean kanalizatia;
@@ -63,7 +62,7 @@ public class KanalizatiaScreen implements Screen {
 
         creator = new KanalizationWorldCreator(this, mainScreen);
 
-        player = new Mario(mainScreen, parallelScreen, this);
+        player = new Electic(mainScreen, parallelScreen, this);
 
         world.setContactListener(new WorldContactListener());
 
@@ -84,13 +83,23 @@ public class KanalizatiaScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
                 player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+                player.b2body.applyLinearImpulse(new Vector2(0.05f, 0), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+                player.b2body.applyLinearImpulse(new Vector2(-0.05f, 0), player.b2body.getWorldCenter(), true);
+            if (WorldContactListener.climb && (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))) {
+                float climbSpeed = 0.4f;
+
+                player.b2body.setLinearVelocity(0, climbSpeed);
+            }
+
+            float playerHeight = Electic.b2body.getPosition().y;
+            if (playerHeight >= 160) {
+                WorldContactListener.climb = false;
+            }
         }
     }
 
@@ -100,7 +109,7 @@ public class KanalizatiaScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         player.update(dt);
 
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if (gameCam.position.x < player.b2body.getPosition().x) {
                 gameCam.position.x = player.b2body.getPosition().x;
             } else if (player.b2body.getPosition().x > 2) {
@@ -144,7 +153,7 @@ public class KanalizatiaScreen implements Screen {
     }
 
     public boolean gameOver(){
-        return player.currentState == Mario.State.DEAD && player.getStateTimer() > 3;
+        return player.currentState == Electic.State.DEAD && player.getStateTimer() > 3;
     }
 
     @Override

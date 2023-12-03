@@ -16,12 +16,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
-import com.electric.game.Scenes.Hud;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.Items.Item;
 import com.electric.game.Sprites.Items.ItemDef;
 import com.electric.game.Sprites.Items.Mushroom;
-import com.electric.game.Sprites.Mario;
+import com.electric.game.Sprites.Electic;
 import com.electric.game.Tools.B2WorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
@@ -42,7 +41,7 @@ public class MainScreen implements Screen {
     private final World world;
     private final Box2DDebugRenderer b2dr;
     private final B2WorldCreator creator;
-    private final Mario player;
+    private final Electic player;
     private final Music music;
     private final Array<Item> items;
     private final LinkedBlockingQueue<ItemDef> itemsToSpawn;
@@ -60,7 +59,7 @@ public class MainScreen implements Screen {
         atlasPers = new TextureAtlas("pers.pack");
 
         main = true;
-        ParallelScreen.parallel = false;
+        KanalizatiaScreen.kanalizatia = false;
 
         this.game = game;
         gameCam = new OrthographicCamera();
@@ -77,7 +76,7 @@ public class MainScreen implements Screen {
 
         creator = new B2WorldCreator(this, kanalizatiaScreen);
 
-        player = new Mario(this, parallelScreen, kanalizatiaScreen);
+        player = new Electic(this, parallelScreen, kanalizatiaScreen);
         if (playerX > 0 && !ParallelScreen.wasDead)
             player.b2body.setTransform(playerX, playerY, 0);
         else
@@ -91,6 +90,7 @@ public class MainScreen implements Screen {
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
+
     }
 
     public TextureAtlas getAtlasRobot(){
@@ -124,7 +124,7 @@ public class MainScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W) ))
                 player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
@@ -153,7 +153,7 @@ public class MainScreen implements Screen {
         }
 
 
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Electic.State.DEAD) {
             if (gameCam.position.x < player.b2body.getPosition().x) {
                 gameCam.position.x = player.b2body.getPosition().x;
             } else if (player.b2body.getPosition().x > 2) {
@@ -196,7 +196,7 @@ public class MainScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
             playerX = player.b2body.getPosition().x;
             playerY = player.b2body.getPosition().y;
-            game.setScreen(new ParallelScreen(game));
+            game.setScreen(new KanalizatiaScreen(game));
         }
 
         if (gameOver()){
@@ -206,7 +206,7 @@ public class MainScreen implements Screen {
     }
 
     public boolean gameOver(){
-        return player.currentState == Mario.State.DEAD && player.getStateTimer() > 2;
+        return player.currentState == Electic.State.DEAD && player.getStateTimer() > 2;
     }
 
     @Override
@@ -245,7 +245,7 @@ public class MainScreen implements Screen {
         b2dr.dispose();
     }
 
-    public Mario getMario() {
+    public Electic getMario() {
         return player;
     }
 }

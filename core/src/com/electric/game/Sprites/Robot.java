@@ -13,14 +13,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Tools.WorldContactListener;
 
 public class Robot extends Enemy {
     private float stateTime;
     private Animation<TextureRegion> flying;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
     private boolean setToBroke;
-    public boolean broken;
+    public static boolean broken;
     private float defaultY;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
@@ -34,7 +33,11 @@ public class Robot extends Enemy {
         flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
         setToBroke = false;
-        broken = false;
+        if(!ElectricGame.robotBroken)
+            broken = false;
+        else if (ElectricGame.robotBroken) {
+            broken = true;
+        }
         defaultY = y;
 
     }
@@ -117,6 +120,7 @@ public class Robot extends Enemy {
         if (setToBroke && !broken) {
             broken = true;
             timeToDefineBrokenRobot = true;
+            ElectricGame.robotBroken = true;
 
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
             world.destroyBody(b2body);
@@ -129,6 +133,7 @@ public class Robot extends Enemy {
                 Coin.mushrooms--;
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(getFrame(0.001f));
+                ElectricGame.robotBroken = false;
 
 
                 // Устанавливаем начальные значения для интерполяции
@@ -173,7 +178,7 @@ public class Robot extends Enemy {
 
 
     @Override
-    public void hitOnHead(Mario mario) {
+    public void hitOnHead(Electic electic) {
         setToBroke = true;
         ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
     }
