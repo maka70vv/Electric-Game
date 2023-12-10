@@ -1,0 +1,26 @@
+
+svarshik.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+робот-сварщик идет
+  rotate: false
+  xy: 1, 1
+  size: 64, 11
+  orig: 64, 11
+  offset: 0, 0
+  index: -1
+робот-сварщик стоит
+  rotate: false
+  xy: 67, 1
+  size: 64, 11
+  orig: 64, 11
+  offset: 0, 0
+  index: -1
+робот-сварщик поломанный
+  rotate: false
+  xy: 133, 1
+  size: 16, 11
+  orig: 16, 11
+  offset: 0, 0
+  index: -1

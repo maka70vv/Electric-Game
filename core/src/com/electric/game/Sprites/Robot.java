@@ -173,11 +173,11 @@ public class Robot extends Enemy {
     }
 
 
-    @Override
-    public void hitOnHead(Electic electic) {
-        setToBroke = true;
-        ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
-    }
+//    @Override
+//    public void hitOnHead(Electic electic) {
+//        setToBroke = true;
+//        ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
+//    }
 
     public void draw(Batch batch) {
         super.draw(batch);
