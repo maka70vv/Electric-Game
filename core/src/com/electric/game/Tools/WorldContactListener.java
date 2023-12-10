@@ -24,46 +24,27 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
-            case ElectricGame.MARIO_BIT | ElectricGame.LESTNITSA_BIT:
+            case ElectricGame.ELECTRIC_BIT | ElectricGame.LESTNITSA_BIT:
                 climb = true;
                 break;
-            case ElectricGame.MARIO_BIT | ElectricGame.END_MAP_BIT:
+            case ElectricGame.ELECTRIC_BIT | ElectricGame.END_MAP_BIT:
                 if (KanalizatiaScreen.kanalizatia)
                     redirectMain = true;
                 break;
-
-            case ElectricGame.MARIO_HEAD_BIT | ElectricGame.COIN_BIT:
-                if (fixA.getFilterData().categoryBits == ElectricGame.MARIO_HEAD_BIT)
-                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Electic) fixA.getUserData());
-                else
-                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Electic) fixB.getUserData());
-                break;
-            case ElectricGame.MARIO_BIT | ElectricGame.COIN_BIT:
-                if (fixA.getFilterData().categoryBits == ElectricGame.MARIO_BIT) {
-                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Electic) fixA.getUserData());
-                }
-                else{
-                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Electic) fixB.getUserData());
-                }
-                break;
-            case ElectricGame.MARIO_BIT | ElectricGame.OBJECT_BIT:
+            case ElectricGame.ELECTRIC_BIT | ElectricGame.OBJECT_BIT:
                 redirectMain = true;
                 break;
 
-            case ElectricGame.MARIO_BIT | ElectricGame.PARALLEL_BIT:
+            case ElectricGame.ELECTRIC_BIT | ElectricGame.PARALLEL_BIT:
                 redirectParallel = true;
                 break;
-
-//            case ElectricGame.MARIO_BIT | ElectricGame.GROUND_BIT:
-//
-//                break;
-            case ElectricGame.ENEMY_HEAD_BIT | ElectricGame.MARIO_BIT:
+            case ElectricGame.ENEMY_HEAD_BIT | ElectricGame.ELECTRIC_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ENEMY_HEAD_BIT)
                     ((Enemy) fixA.getUserData()).hitOnHead((Electic) fixB.getUserData());
                 else
                     ((Enemy) fixB.getUserData()).hitOnHead((Electic) fixA.getUserData());
                 break;
-            case ElectricGame.ENEMY_BIT | ElectricGame.OBJECT_BIT:
+            case ElectricGame.ENEMY_BIT | ElectricGame.SVARSHIK_PLACE_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
@@ -73,19 +54,19 @@ public class WorldContactListener implements ContactListener {
 //                ((Enemy) fixA.getUserData()).onEnemyHit((Enemy) fixB.getUserData());
 //                ((Enemy) fixB.getUserData()).onEnemyHit((Enemy) fixA.getUserData());
 //                break;
-//            case ElectricGame.MARIO_BIT | ElectricGame.ENEMY_BIT:
-//                if (fixA.getFilterData().categoryBits == ElectricGame.MARIO_BIT)
-//                    ((Mario) fixA.getUserData()).hit((Enemy) fixB.getUserData());
-//                else
-//                    ((Mario) fixB.getUserData()).hit((Enemy) fixA.getUserData());
-//                break;
+            case ElectricGame.ELECTRIC_BIT | ElectricGame.ENEMY_BIT:
+                if (fixA.getFilterData().categoryBits == ElectricGame.ELECTRIC_BIT)
+                    ((Electic) fixA.getUserData()).decreaseHealth();
+                else
+                    ((Electic) fixB.getUserData()).decreaseHealth();
+                break;
             case ElectricGame.ITEM_BIT | ElectricGame.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ITEM_BIT)
                     ((Item) fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Item) fixB.getUserData()).reverseVelocity(true, false);
                 break;
-            case ElectricGame.ITEM_BIT | ElectricGame.MARIO_BIT:
+            case ElectricGame.ITEM_BIT | ElectricGame.ELECTRIC_BIT:
                 if (fixA.getFilterData().categoryBits == ElectricGame.ITEM_BIT)
                     ((Item) fixA.getUserData()).use((Electic) fixB.getUserData());
                 else

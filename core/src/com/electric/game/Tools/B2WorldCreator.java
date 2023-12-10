@@ -14,12 +14,14 @@ import com.electric.game.Sprites.*;
 
 public class B2WorldCreator {
     private Array<Robot> robots;
+    private Array<RobotSvarshik> svarshiks;
     private Array<RobotTable> robotTables;
 
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(robots);
         enemies.addAll(robotTables);
+        enemies.addAll(svarshiks);
         return enemies;
     }
 
@@ -47,11 +49,11 @@ public class B2WorldCreator {
         }
 
 //        create shop bodies/fixtures
-        for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            new Coin(screen, rect, kanalizatiaScreen);
-        }
+//        for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//
+//            new Coin(screen, rect, kanalizatiaScreen);
+//        }
 
 //        create platform bodies/fixtures
         for(MapObject object:map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
@@ -67,12 +69,25 @@ public class B2WorldCreator {
             new RedirectPlatform(screen, rect, kanalizatiaScreen);
         }
 
+//        create platform for robot svarshik
+        for(MapObject object:map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new SvarshikPlace(screen, rect, kanalizatiaScreen);
+        }
 
 //        robot
         robots = new Array<Robot>();
         for(MapObject object:map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             robots.add(new Robot(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+
+//        robot svarshik
+        svarshiks = new Array<RobotSvarshik>();
+        for(MapObject object:map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            svarshiks.add(new RobotSvarshik(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
         //        robot table
         robotTables = new Array<RobotTable>();

@@ -1,20 +1,11 @@
 package com.electric.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.electric.game.Screens.GameOverScreen;
-import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Screens.ParallelScreen;
-import com.electric.game.Tools.WorldContactListener;
-
-import static com.electric.game.Screens.MainScreen.main;
-import static com.electric.game.Screens.ParallelScreen.parallel;
 
 public class ElectricGame extends Game {
 	public static final int V_WIDTH = 400;
@@ -23,9 +14,9 @@ public class ElectricGame extends Game {
 
 	public static final short NOTHING_BIT = 0;
 	public static final short GROUND_BIT = 1;
-	public static final short MARIO_BIT = 2;
+	public static final short ELECTRIC_BIT = 2;
 	public static final short PARALLEL_BIT = 4;
-	public static final short COIN_BIT = 8;
+	public static final short SVARSHIK_PLACE_BIT = 8;
 	public static final short DESTROYED_BIT = 16;
 	public static final short OBJECT_BIT = 32;
 	public static final short ENEMY_BIT = 64;

@@ -11,7 +11,7 @@ import com.electric.game.Sprites.Electic;
 public class Mushroom extends Item {
     public Mushroom(MainScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(screen.getAtlas().findRegion("mushroom"), 0, 0, 16, 16);
+//        setRegion(screen.getAtlas().findRegion("mushroom"), 0, 0, 16, 16);
         velocity = new Vector2(0.7f, 0);
     }
 
@@ -26,10 +26,10 @@ public class Mushroom extends Item {
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / ElectricGame.PPM);
         fdef.filter.categoryBits = ElectricGame.ITEM_BIT;
-        fdef.filter.maskBits = ElectricGame.MARIO_BIT |
+        fdef.filter.maskBits = ElectricGame.ELECTRIC_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.GROUND_BIT |
-                ElectricGame.COIN_BIT ;
+                ElectricGame.SVARSHIK_PLACE_BIT ;
 //                ElectricGame.BRICK_BIT;
 
         fdef.shape = shape;

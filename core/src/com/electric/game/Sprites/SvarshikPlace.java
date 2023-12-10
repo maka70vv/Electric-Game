@@ -6,13 +6,12 @@ import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 
-public class Pipes extends InteractiveTileObject{
+public class SvarshikPlace extends InteractiveTileObject{
 
-    public Pipes(MainScreen screen, Rectangle bounds, KanalizatiaScreen kanalizatiaScreen){
+    public SvarshikPlace(MainScreen screen, Rectangle bounds, KanalizatiaScreen kanalizatiaScreen){
         super(screen, bounds, kanalizatiaScreen);
-        TiledMapTileSet tileSet = map.getTileSets().getTileSet("tileset_gutter");
         fixture.setUserData(this);
-        setCategoryFilter(ElectricGame.OBJECT_BIT);
+        setCategoryFilter(ElectricGame.SVARSHIK_PLACE_BIT);
     }
 
     @Override

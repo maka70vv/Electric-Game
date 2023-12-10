@@ -18,19 +18,24 @@ import static com.electric.game.Screens.ParallelScreen.parallel;
 
 public class Electic extends Sprite {
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+    public void decreaseHealth() {
+        hp-=10;
+    }
+
+    public enum State {FALLING, STANDING, RUNNING, DEAD}
     public static State currentState;
     public State previousState;
     public World world;
     public static Body b2body;
     public TextureRegion electricStand;
     private Animation<TextureRegion> electricRun;
-    private TextureRegion electricJump;
     private TextureRegion electricDie;
 
     private float stateTimer;
     private boolean runningRight;
     public static boolean electricIsDead;
+
+    public static Integer hp;
 
 
 
@@ -44,8 +49,10 @@ public class Electic extends Sprite {
         }
         currentState = State.STANDING;
         previousState = State.STANDING;
+        hp = 100;
         stateTimer = 0;
         runningRight = true;
+        electricIsDead = false;
 
         Array<TextureRegion> frames = new Array<>();
 // in main screen
@@ -58,22 +65,14 @@ public class Electic extends Sprite {
 
             frames.clear();
 
-            electricJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
-
             electricStand = new TextureRegion(screen.getAtlasPers().findRegion("персонаж_стоит"), 0, 0, 17, 32);
 
-            electricDie = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
+            electricDie = new TextureRegion(screen.getAtlasPers().findRegion("персонаж_стоит"), 0, 0, 17, 32);
 
             definePlayer();
 
             setBounds(0, 0, 16 / ElectricGame.PPM, 16 / ElectricGame.PPM);
             setRegion(electricStand);
-
-//        mario grow
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
         }
 // in parallel screen
         else if (parallel && !main && !kanalizatia) {
@@ -85,11 +84,9 @@ public class Electic extends Sprite {
 
             frames.clear();
 
-            electricJump = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
-
             electricStand = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
 
-            electricDie = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
+            electricDie = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 0, 0, 17, 32);
 
             definePlayer();
 
@@ -115,9 +112,7 @@ public class Electic extends Sprite {
 
             electricStand = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 0, 0, 17, 32);
 
-            electricJump = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 80, 0, 16, 16);
-
-            electricDie = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 96, 0, 16, 16);
+            electricDie = new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж_стоит"), 0, 0, 17, 32);
 
 
             definePlayer();
@@ -132,7 +127,7 @@ public class Electic extends Sprite {
 
         setRegion(getFrame(dt));
 
-        if (b2body.getPosition().y < 0){
+        if (b2body.getPosition().y < 0 || hp <= 0){
             electricIsDead = true;
         }
     }
@@ -144,9 +139,6 @@ public class Electic extends Sprite {
         switch (currentState){
             case DEAD:
                 region = electricDie;
-                break;
-            case JUMPING:
-                region = electricJump;
                 break;
             case RUNNING:
                 region = electricRun.getKeyFrame(stateTimer, true);
@@ -174,9 +166,7 @@ public class Electic extends Sprite {
     public State getState(){
         if (electricIsDead) {
             return State.DEAD;
-        }else if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y<0 && previousState == State.JUMPING)){
-            return State.JUMPING;
-        } else if (b2body.getLinearVelocity().y < 0){
+        }else if (b2body.getLinearVelocity().y < 0){
             return State.FALLING;
         } else if (b2body.getLinearVelocity().x != 0){
             return State.RUNNING;
@@ -193,9 +183,8 @@ public class Electic extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
 
-        fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
+        fdef.filter.categoryBits = ElectricGame.ELECTRIC_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
-                ElectricGame.COIN_BIT |
                 ElectricGame.ENEMY_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.ENEMY_HEAD_BIT |
@@ -219,7 +208,7 @@ public class Electic extends Sprite {
         fdef.shape = body;
         b2body.createFixture(fdef).setUserData(this);
         fdef.restitution = 0.5f;
-        fdef.filter.categoryBits = ElectricGame.MARIO_BIT;
+        fdef.filter.categoryBits = ElectricGame.ELECTRIC_BIT;
         b2body.createFixture(fdef).setUserData(this);
     }
 

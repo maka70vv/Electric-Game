@@ -16,11 +16,11 @@ import com.electric.game.Screens.MainScreen;
 
 public class Robot extends Enemy {
     private float stateTime;
-    private Animation<TextureRegion> flying;
+    private final Animation<TextureRegion> flying;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
     private boolean setToBroke;
     public static boolean broken;
-    private float defaultY;
+    private final float defaultY;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
 
@@ -33,11 +33,7 @@ public class Robot extends Enemy {
         flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
         setToBroke = false;
-        if(!ElectricGame.robotBroken)
-            broken = false;
-        else if (ElectricGame.robotBroken) {
-            broken = true;
-        }
+        broken = ElectricGame.robotBroken;
         defaultY = y;
 
     }
@@ -54,7 +50,7 @@ public class Robot extends Enemy {
         shape.setRadius(6 / ElectricGame.PPM);
         fdef.filter.categoryBits = ElectricGame.ENEMY_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
-                ElectricGame.COIN_BIT |
+                ElectricGame.SVARSHIK_PLACE_BIT |
                 ElectricGame.ENEMY_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.PARALLEL_BIT;
@@ -79,11 +75,11 @@ public class Robot extends Enemy {
         shape.setRadius(6 / ElectricGame.PPM);
         fdef.filter.categoryBits = ElectricGame.ENEMY_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
-                ElectricGame.COIN_BIT |
+                ElectricGame.SVARSHIK_PLACE_BIT |
                 ElectricGame.ENEMY_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.PARALLEL_BIT |
-                ElectricGame.MARIO_BIT;
+                ElectricGame.ELECTRIC_BIT;
 
         fdef.shape = shape;
         fdef.restitution = 0.5f;
@@ -125,12 +121,12 @@ public class Robot extends Enemy {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
             world.destroyBody(b2body);
             defineEnemy();
-            float distance = Math.abs(screen.getMario().getX() - b2body.getPosition().x);
+            float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
 
             if (distance < MAX_REPAIR_DISTANCE) {
                 setToBroke = false;
                 broken = false;
-                Coin.mushrooms--;
+//                Coin.mushrooms--;
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(getFrame(0.001f));
                 ElectricGame.robotBroken = false;
