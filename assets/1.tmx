@@ -64,7 +64,7 @@
   <object id="12" x="-0.666667" y="140" width="67.1667" height="4.33333"/>
  </objectgroup>
  <objectgroup id="13" name="redirectPlatform">
-  <object id="27" x="351.772" y="191.333" width="221.122" height="18"/>
+  <object id="27" x="351.651" y="192.363" width="221.122" height="18"/>
  </objectgroup>
  <objectgroup id="14" name="robotSvarshikPlace">
   <object id="28" x="688" y="175.667" width="16" height="16"/>

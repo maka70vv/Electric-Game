@@ -51,9 +51,8 @@ public class MainScreen implements Screen {
     private static float playerX;
     private static float playerY;
 
-
-
     public MainScreen(ElectricGame game){
+
         atlasRobot = new TextureAtlas("robot.pack");
         atlasPers = new TextureAtlas("pers.pack");
         atlasSvarshik = new TextureAtlas("svarshik.pack");
@@ -186,6 +185,7 @@ public class MainScreen implements Screen {
         for (Item item : items){
             item.draw(game.batch);
         }
+
         game.batch.end();
 
 

@@ -2,7 +2,6 @@ package com.electric.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,7 +32,7 @@ public class Robot extends Enemy {
         flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
         setToBroke = false;
-        broken = ElectricGame.robotBroken;
+        broken = true;
         defaultY = y;
 
     }
@@ -48,10 +47,10 @@ public class Robot extends Enemy {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / ElectricGame.PPM);
-        fdef.filter.categoryBits = ElectricGame.ENEMY_BIT;
+        fdef.filter.categoryBits = ElectricGame.ROBOT_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
                 ElectricGame.SVARSHIK_PLACE_BIT |
-                ElectricGame.ENEMY_BIT |
+                ElectricGame.ROBOT_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.PARALLEL_BIT;
         fdef.shape = shape;
@@ -59,7 +58,7 @@ public class Robot extends Enemy {
         b2body.createFixture(fdef).setUserData(this);
 
         fdef.restitution = 0.5f;
-        fdef.filter.categoryBits = ElectricGame.ENEMY_HEAD_BIT;
+        fdef.filter.categoryBits = ElectricGame.ROBOT_BIT;
         b2body.createFixture(fdef).setUserData(this);
         b2body.setGravityScale(0);
     }
@@ -73,10 +72,10 @@ public class Robot extends Enemy {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / ElectricGame.PPM);
-        fdef.filter.categoryBits = ElectricGame.ENEMY_BIT;
+        fdef.filter.categoryBits = ElectricGame.ROBOT_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
                 ElectricGame.SVARSHIK_PLACE_BIT |
-                ElectricGame.ENEMY_BIT |
+                ElectricGame.ROBOT_BIT |
                 ElectricGame.OBJECT_BIT |
                 ElectricGame.PARALLEL_BIT |
                 ElectricGame.ELECTRIC_BIT;
@@ -96,7 +95,7 @@ public class Robot extends Enemy {
 
         fdef.shape = head;
         fdef.restitution = 0.5f;
-        fdef.filter.categoryBits = ElectricGame.ENEMY_HEAD_BIT;
+        fdef.filter.categoryBits = ElectricGame.ROBOT_BIT;
         b2body.createFixture(fdef).setUserData(this);
         b2body.setGravityScale(0);
     }
@@ -113,15 +112,15 @@ public class Robot extends Enemy {
 
     @Override
     public void update(float dt) {
+        float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
+
         if (setToBroke && !broken) {
             broken = true;
             timeToDefineBrokenRobot = true;
-            ElectricGame.robotBroken = true;
 
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
             world.destroyBody(b2body);
             defineEnemy();
-            float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
 
             if (distance < MAX_REPAIR_DISTANCE) {
                 setToBroke = false;
@@ -129,7 +128,6 @@ public class Robot extends Enemy {
 //                Coin.mushrooms--;
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(getFrame(0.001f));
-                ElectricGame.robotBroken = false;
 
 
                 // Устанавливаем начальные значения для интерполяции
@@ -162,6 +160,8 @@ public class Robot extends Enemy {
             velocity.y = 0;
             setSize(0.17f, 0.32f);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+            if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R))
+                setToBroke = true;
         } else {
             redefineRobot();
             b2body.setLinearVelocity(0, -1);

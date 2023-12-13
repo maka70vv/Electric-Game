@@ -1,8 +1,13 @@
 package com.electric.game.Sprites;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -27,6 +32,8 @@ public class Electic extends Sprite {
     public State previousState;
     public World world;
     public static Body b2body;
+    private ShapeRenderer shapeRenderer;
+
     public TextureRegion electricStand;
     private Animation<TextureRegion> electricRun;
     private TextureRegion electricDie;
@@ -37,6 +44,13 @@ public class Electic extends Sprite {
 
     public static Integer hp;
 
+    Texture blank;
+
+
+
+    private static final float HEALTH_BAR_WIDTH = 32 / ElectricGame.PPM;
+    private static final float HEALTH_BAR_HEIGHT = 4 / ElectricGame.PPM;
+    private static final float HEALTH_BAR_OFFSET_Y = 0.02f;
 
 
     public Electic(MainScreen screen, ParallelScreen parallelScreen, KanalizatiaScreen kanalizatiaScreen) {
@@ -53,6 +67,8 @@ public class Electic extends Sprite {
         stateTimer = 0;
         runningRight = true;
         electricIsDead = false;
+
+//        shapeRenderer = new ShapeRenderer();
 
         Array<TextureRegion> frames = new Array<>();
 // in main screen
@@ -185,9 +201,9 @@ public class Electic extends Sprite {
 
         fdef.filter.categoryBits = ElectricGame.ELECTRIC_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
-                ElectricGame.ENEMY_BIT |
+                ElectricGame.ROBOT_BIT |
                 ElectricGame.OBJECT_BIT |
-                ElectricGame.ENEMY_HEAD_BIT |
+                ElectricGame.SVARSHIK_BIT |
                 ElectricGame.ITEM_BIT |
                 ElectricGame.PARALLEL_BIT |
                 ElectricGame.LESTNITSA_BIT |
@@ -216,4 +232,33 @@ public class Electic extends Sprite {
         return stateTimer;
     }
 
+
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
+        if (hp > 0) {
+            batch.draw(getHealthBarRegion(), b2body.getPosition().x - HEALTH_BAR_WIDTH / 2, b2body.getPosition().y + HEALTH_BAR_OFFSET_Y + 20/ElectricGame.PPM,
+                    HEALTH_BAR_WIDTH * (hp / 100f), HEALTH_BAR_HEIGHT);
+        }
+    }
+
+    private TextureRegion getHealthBarRegion() {
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(getColorByHealth());
+        pixmap.fill();
+        TextureRegion textureRegion = new TextureRegion(new Texture(pixmap));
+        pixmap.dispose();
+        return textureRegion;
+    }
+
+    private Color getColorByHealth() {
+        if (hp > 70) {
+            return Color.GREEN;
+        } else if (hp > 30) {
+            return Color.YELLOW;
+        } else {
+            return Color.RED;
+        }
+    }
 }

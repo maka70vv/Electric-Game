@@ -16,12 +16,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
 import com.electric.game.Sprites.Electic;
+import com.electric.game.Sprites.Enemy;
+import com.electric.game.Sprites.EnemyKanalizatia;
 import com.electric.game.Tools.KanalizationWorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
 public class KanalizatiaScreen implements Screen {
     private final ElectricGame game;
     private final TextureAtlas atlas;
+    private final TextureAtlas atlasInoi;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -42,6 +45,7 @@ public class KanalizatiaScreen implements Screen {
 
     public KanalizatiaScreen(ElectricGame game){
         atlas = new TextureAtlas("pers.pack");
+        atlasInoi = new TextureAtlas("inoi.pack");
 
         ParallelScreen.parallel = false;
         MainScreen.main = false;
@@ -76,6 +80,9 @@ public class KanalizatiaScreen implements Screen {
     public TextureAtlas getAtlas(){
         return atlas;
     }
+    public TextureAtlas getAtlasInoi(){
+        return atlasInoi;
+    }
 
     @Override
     public void show() {
@@ -84,8 +91,6 @@ public class KanalizatiaScreen implements Screen {
 
     public void handleInput(float dt) {
         if (player.currentState != Electic.State.DEAD) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
-                player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.05f, 0), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
@@ -95,11 +100,12 @@ public class KanalizatiaScreen implements Screen {
 
                 player.b2body.setLinearVelocity(0, climbSpeed);
             }
+        }
 
             float playerHeight = Electic.b2body.getPosition().y;
             if (playerHeight >= 160) {
                 WorldContactListener.climb = false;
-            }
+
         }
     }
 
@@ -108,6 +114,13 @@ public class KanalizatiaScreen implements Screen {
 
         world.step(1 / 60f, 6, 2);
         player.update(dt);
+
+        for (EnemyKanalizatia enemy : creator.getEnemiesKanalizatia()) {
+            enemy.update(dt);
+            if(enemy.getX() < gameCam.position.x + 224 / ElectricGame.PPM) {
+                enemy.b2body.setActive(true);
+            }
+        }
 
         if (player.currentState != Electic.State.DEAD) {
             if (gameCam.position.x < player.b2body.getPosition().x) {

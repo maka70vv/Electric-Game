@@ -1,68 +1,57 @@
 package com.electric.game.Sprites;
 
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.MainScreen;
 
-
 public class RobotSvarshik extends Enemy {
     private float stateTime;
-    private Animation walkAnimation;
+    private final Animation<TextureRegion> walking;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
-    private boolean setToDestroy;
-    private boolean destroyed;
-    private boolean electricAtack;
+    private boolean setToBroke;
+    public static boolean broken;
+    public static boolean attacking;
+    private boolean timeToRedefineRobot;
+    private boolean timeToDefineBrokenRobot;
+
 
     public RobotSvarshik(MainScreen screen, float x, float y) {
         super(screen, x, y);
-        for (int i = 0; i < 2; i++)
+        frames = new Array<TextureRegion>();
+        for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик идет"), i * 16, 0, 16, 11));
-        walkAnimation = new Animation(0.4f, frames);
-        stateTime = 0;
-        setBounds(getX(), getY(), 16 / ElectricGame.PPM, 16 / ElectricGame.PPM);
-        setToDestroy = false;
-        destroyed = false;
-        defineEnemy();
+        walking = new Animation<TextureRegion>(0.2f, frames);
+        setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
+        setToBroke = false;
     }
 
-    public void update(float dt){
-        stateTime += dt;
-        float distanceToPlayer = Math.abs(screen.getPlayer().b2body.getPosition().x - b2body.getPosition().x);
-
-        if(setToDestroy && !destroyed){
-            world.destroyBody(b2body);
-            destroyed = true;
-            setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
-            stateTime = 0;
-        }
-        else if(!destroyed) {
-            if (distanceToPlayer<1) {
-                b2body.setLinearVelocity(velocity);
-                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-                setRegion((TextureRegion) walkAnimation.getKeyFrame(stateTime, true));
-            } else if (distanceToPlayer <= 0.3f) {
-                electricAtack = true;
-            } else {
-                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-
-                setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик стоит"), 0, 0, 16, 11));
-            }
-        }
+    private void redefineRobot() {
+        Vector2 position = b2body.getPosition();
+        world.destroyBody(b2body);
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(position);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / ElectricGame.PPM);
+        fdef.filter.categoryBits = ElectricGame.ROBOT_BIT;
+        fdef.filter.maskBits = ElectricGame.GROUND_BIT |
+                ElectricGame.SVARSHIK_PLACE_BIT |
+                ElectricGame.ROBOT_BIT |
+                ElectricGame.OBJECT_BIT |
+                ElectricGame.PARALLEL_BIT;
+        fdef.shape = shape;
+        fdef.restitution = 0.5f;
+        b2body.createFixture(fdef).setUserData(this);
     }
-
-    public void onHit(Electic electic) {
-        electic.decreaseHealth();
-    }
-
 
     @Override
     protected void defineEnemy() {
@@ -70,39 +59,101 @@ public class RobotSvarshik extends Enemy {
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / ElectricGame.PPM);
-        fdef.filter.categoryBits = ElectricGame.ENEMY_BIT;
+        fdef.filter.categoryBits = ElectricGame.SVARSHIK_BIT;
         fdef.filter.maskBits = ElectricGame.GROUND_BIT |
                 ElectricGame.SVARSHIK_PLACE_BIT |
-                ElectricGame.ENEMY_BIT |
+                ElectricGame.ROBOT_BIT |
                 ElectricGame.OBJECT_BIT |
+                ElectricGame.PARALLEL_BIT |
                 ElectricGame.ELECTRIC_BIT;
 
         fdef.shape = shape;
+        fdef.restitution = 0.5f;
         b2body.createFixture(fdef).setUserData(this);
 
-        //Create the Head here:
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 8).scl(1 / ElectricGame.PPM);
-        vertice[1] = new Vector2(5, 8).scl(1 / ElectricGame.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / ElectricGame.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / ElectricGame.PPM);
+
+        vertice[0] = new Vector2(-5, 15).scl(1 / ElectricGame.PPM);
+        vertice[1] = new Vector2(5, 15).scl(1 / ElectricGame.PPM);
+        vertice[2] = new Vector2(-3, 5).scl(1 / ElectricGame.PPM);
+        vertice[3] = new Vector2(3, 5).scl(1 / ElectricGame.PPM);
         head.set(vertice);
 
         fdef.shape = head;
         fdef.restitution = 0.5f;
-        fdef.filter.categoryBits = ElectricGame.ENEMY_HEAD_BIT;
+        fdef.filter.categoryBits = ElectricGame.SVARSHIK_BIT;
         b2body.createFixture(fdef).setUserData(this);
-
     }
 
-    public void draw(Batch batch){
-        if(!destroyed || stateTime < 1)
-            super.draw(batch);
+    public TextureRegion getFrame(float dt) {
+        TextureRegion region;
+        region = walking.getKeyFrame(stateTime, true);
+
+        stateTime = stateTime + dt;
+        return region;
+    }
+
+    private static final float MAX_REPAIR_DISTANCE = 0.3f;
+    private static final float START_WALKING_DISTANCE = 1.5f;
+
+    @Override
+    public void update(float dt) {
+        float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
+
+        if (setToBroke && !broken) {
+            broken = true;
+            timeToDefineBrokenRobot = true;
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
+            world.destroyBody(b2body);
+            defineEnemy();
+
+            if (distance < MAX_REPAIR_DISTANCE) {
+                setToBroke = false;
+                broken = false;
+//                Coin.mushrooms--;
+                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+                setRegion(getFrame(0.001f));
+            }
+        } else if (!broken) {
+            if (distance < START_WALKING_DISTANCE) {
+                b2body.setLinearVelocity(velocity);
+                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+                setRegion(getFrame(dt));
+                if (distance <= MAX_REPAIR_DISTANCE)
+                    attacking = true;
+
+                if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R))
+                    setToBroke = true;
+            } else {
+                setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик стоит"), 0, 0, 16, 11));
+//                setSize(0.17f, 0.32f);
+                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+            }
+        }else {
+                redefineRobot();
+                b2body.setLinearVelocity(0, 0);
+                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+//                setSize(0.16f, 0.12f);
+                setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
+
+            }
+        }
+
+
+//    @Override
+//    public void hitOnHead(Electic electic) {
+//        setToBroke = true;
+//        ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
+//    }
+
+
+    public void draw(Batch batch) {
+        super.draw(batch);
     }
 
 }

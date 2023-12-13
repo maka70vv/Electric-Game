@@ -70,11 +70,6 @@ public class RobotTable extends Enemy {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
     }
 
-    @Override
-    public void hitOnHead(Electic electic) {
-
-    }
-
     public void draw(Batch batch){
         super.draw(batch);
     }

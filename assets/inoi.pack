@@ -1,0 +1,12 @@
+
+inoi.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+иной
+  rotate: false
+  xy: 1, 1
+  size: 64, 41
+  orig: 64, 41
+  offset: 0, 0
+  index: -1

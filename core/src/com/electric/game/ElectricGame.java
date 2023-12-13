@@ -19,8 +19,8 @@ public class ElectricGame extends Game {
 	public static final short SVARSHIK_PLACE_BIT = 8;
 	public static final short DESTROYED_BIT = 16;
 	public static final short OBJECT_BIT = 32;
-	public static final short ENEMY_BIT = 64;
-	public static final short ENEMY_HEAD_BIT = 128;
+	public static final short ROBOT_BIT = 64;
+	public static final short SVARSHIK_BIT = 128;
 	public static final short ITEM_BIT = 256;
 	public static final short MARIO_HEAD_BIT = 512;
 	public static final short LESTNITSA_BIT = 1024;
@@ -31,7 +31,6 @@ public class ElectricGame extends Game {
 	public SpriteBatch batch;
 
 	public static AssetManager manager;
-	public static boolean robotBroken = false;
 
 
 	@Override
