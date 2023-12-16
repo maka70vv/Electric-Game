@@ -62,6 +62,12 @@ public class KanalizationWorldCreator {
             new EndMap(screen, rect, mainScreen);
         }
 
+        for(MapObject object:map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new JadroBlue(mainScreen, rect, screen);
+        }
+
         //        robot inoi
         inoiRobots = new Array<Inoi>();
         for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){

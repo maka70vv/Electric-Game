@@ -25,6 +25,7 @@ public class KanalizatiaScreen implements Screen {
     private final ElectricGame game;
     private final TextureAtlas atlas;
     private final TextureAtlas atlasInoi;
+    private final TextureAtlas atlasJadro;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -46,6 +47,7 @@ public class KanalizatiaScreen implements Screen {
     public KanalizatiaScreen(ElectricGame game){
         atlas = new TextureAtlas("pers.pack");
         atlasInoi = new TextureAtlas("inoi.pack");
+        atlasJadro = new TextureAtlas("yadro.pack");
 
         ParallelScreen.parallel = false;
         MainScreen.main = false;
@@ -82,6 +84,9 @@ public class KanalizatiaScreen implements Screen {
     }
     public TextureAtlas getAtlasInoi(){
         return atlasInoi;
+    }
+    public TextureAtlas getAtlasJadro(){
+        return atlasJadro;
     }
 
     @Override

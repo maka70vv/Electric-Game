@@ -1,0 +1,12 @@
+Ядро синее.png
+size: 7, 5
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ядро синее
+  rotate: false
+  xy: 0, 0
+  size: 7, 5
+  orig: 7, 5
+  offset: 0, 0
+  index: -1
