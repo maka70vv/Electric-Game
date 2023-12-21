@@ -37,7 +37,7 @@ public class ElectricGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
-		manager.load("audio/music/mario_music.ogg", Music.class);
+		manager.load("audio/music/Komiku_-_32_-_Love_Planet(chosic.com).mp3", Music.class);
 		manager.load("audio/sounds/coin.wav", Sound.class);
 		manager.load("audio/sounds/bump.wav", Sound.class);
 		manager.load("audio/sounds/breakblock.wav", Sound.class);

@@ -72,7 +72,7 @@ public class KanalizatiaScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
-        music = ElectricGame.manager.get("audio/music/mario_music.ogg", Music.class);
+        music = ElectricGame.manager.get("audio/music/Komiku_-_32_-_Love_Planet(chosic.com).mp3", Music.class);
         music.setLooping(true);
         music.play();
 
@@ -151,7 +151,7 @@ public class KanalizatiaScreen implements Screen {
 //        render map
         renderer.render();
 //        render B2DDebugLines
-        b2dr.render(world, gameCam.combined);
+//        b2dr.render(world, gameCam.combined);
 
 
 

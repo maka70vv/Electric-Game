@@ -29,7 +29,7 @@ import com.electric.game.Tools.WorldContactListener;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MainScreen implements Screen {
-//    private Hud hud;
+    private Hud hud;
     private final ElectricGame game;
     private final TextureAtlas atlasRobot;
     private final TextureAtlas atlasSvarshik;
@@ -54,7 +54,7 @@ public class MainScreen implements Screen {
     private static float playerY;
 
     public MainScreen(ElectricGame game){
-//        hud = new Hud(game.batch);
+        hud = new Hud(game.batch);
 
         atlasRobot = new TextureAtlas("robot.pack");
         atlasPers = new TextureAtlas("pers.pack");
@@ -86,7 +86,7 @@ public class MainScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
-        music = ElectricGame.manager.get("audio/music/mario_music.ogg", Music.class);
+        music = ElectricGame.manager.get("audio/music/Komiku_-_32_-_Love_Planet(chosic.com).mp3", Music.class);
         music.setLooping(true);
         music.play();
 
@@ -137,7 +137,7 @@ public class MainScreen implements Screen {
         handleInput(dt);
         handleSpawningItems();
 
-//        hud.update(dt);
+        hud.update(dt);
 
         world.step(1 / 60f, 6, 2);
         player.update(dt);
@@ -177,7 +177,7 @@ public class MainScreen implements Screen {
 //        render map
         renderer.render();
 //        render B2DDebugLines
-        b2dr.render(world, gameCam.combined);
+//        b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.enableBlending();
@@ -190,11 +190,10 @@ public class MainScreen implements Screen {
         for (Item item : items){
             item.draw(game.batch);
         }
-
-//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-//        hud.stage.draw();
-
         game.batch.end();
+
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
 
 
