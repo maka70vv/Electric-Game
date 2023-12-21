@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
 import com.electric.game.Scenes.Hud;
+import com.electric.game.Sprites.Cores;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.Items.Item;
 import com.electric.game.Sprites.Items.ItemDef;
@@ -33,7 +34,9 @@ public class MainScreen implements Screen {
     private final ElectricGame game;
     private final TextureAtlas atlasRobot;
     private final TextureAtlas atlasSvarshik;
+    private final TextureAtlas atlasNadpis;
     private final TextureAtlas atlasPers;
+    private final TextureAtlas atlasJadro;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -59,6 +62,9 @@ public class MainScreen implements Screen {
         atlasRobot = new TextureAtlas("robot.pack");
         atlasPers = new TextureAtlas("pers.pack");
         atlasSvarshik = new TextureAtlas("svarshik.pack");
+        atlasNadpis = new TextureAtlas("nadpis2.pack");
+        atlasJadro = new TextureAtlas("yadro.pack");
+
 
         main = true;
         KanalizatiaScreen.kanalizatia = false;
@@ -98,6 +104,12 @@ public class MainScreen implements Screen {
     public TextureAtlas getAtlasRobot(){
         return atlasRobot;
     }
+    public TextureAtlas getAtlasJadro(){
+        return atlasJadro;
+    }
+    public TextureAtlas getAtlasNadpis(){
+        return atlasNadpis;
+    }
     public TextureAtlas getAtlasSvarshik(){
         return atlasSvarshik;
     }
@@ -106,18 +118,6 @@ public class MainScreen implements Screen {
         return atlasPers;
     }
 
-    public void spawnItem(ItemDef idef){
-        itemsToSpawn.add(idef);
-    }
-
-    public void handleSpawningItems(){
-        if (!itemsToSpawn.isEmpty()){
-            ItemDef idef = itemsToSpawn.poll();
-            if (idef.type == Mushroom.class){
-                items.add(new Mushroom(this, idef.position.x, idef.position.y));
-            }
-        }
-    }
 
     @Override
     public void show() {
@@ -135,7 +135,6 @@ public class MainScreen implements Screen {
 
     public void update(float dt) {
         handleInput(dt);
-        handleSpawningItems();
 
         hud.update(dt);
 
@@ -183,7 +182,6 @@ public class MainScreen implements Screen {
         game.batch.enableBlending();
 
         game.batch.begin();
-//        hud.stage.draw();
         player.draw(game.batch);
         for (Enemy enemy : creator.getEnemies())
             enemy.draw(game.batch);

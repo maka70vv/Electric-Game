@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
+import com.electric.game.Sprites.Cores;
 
 
 public class Hud implements Disposable{
@@ -32,8 +33,6 @@ public class Hud implements Disposable{
 
         keys = 0;
         cores = 0;
-
-
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
         viewport = new FitViewport(ElectricGame.V_WIDTH, ElectricGame.V_HEIGHT, new OrthographicCamera());
@@ -69,14 +68,17 @@ public class Hud implements Disposable{
     }
 
     public void update(float dt){
-
     }
 
-    public static void addScore(int value){
+    public static void addKeys(int value){
         keys += value;
-        cores += value;
         keysCounter.setText(String.format("%06d", keys));
+    }
+
+    public static void addCores(int value){
+        cores += value;
         coresConter.setText(String.format("%06d", cores));
+
     }
 
     @Override

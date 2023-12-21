@@ -1,0 +1,12 @@
+nadpis2.png
+size: 368, 48
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+робот-надпись2
+  rotate: false
+  xy: 0, 0
+  size: 368, 48
+  orig: 368, 48
+  offset: 0, 0
+  index: -1

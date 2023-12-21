@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.electric.game.ElectricGame;
+import com.electric.game.Scenes.Hud;
 import com.electric.game.Screens.MainScreen;
 
 public class Robot extends Enemy {
@@ -22,10 +23,15 @@ public class Robot extends Enemy {
     private final float defaultY;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
+    private int coresCount;
 
 
     public Robot(MainScreen screen, float x, float y) {
         super(screen, x, y);
+        if (Cores.cores != null)
+            coresCount = Cores.cores;
+        else
+            coresCount = 0;
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlasRobot().findRegion("робот-уборщик1"), i * 17, 0, 17, 32));
@@ -112,20 +118,25 @@ public class Robot extends Enemy {
 
     @Override
     public void update(float dt) {
+        if (Cores.cores != null) {
+            coresCount = Cores.cores;
+        }else {
+            coresCount = 0;
+        }
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
-
         if (setToBroke && !broken) {
             broken = true;
             timeToDefineBrokenRobot = true;
 
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken && coresCount>0) {
             world.destroyBody(b2body);
             defineEnemy();
 
             if (distance < MAX_REPAIR_DISTANCE) {
+                Hud.addCores(-1);
+                Cores.cores--;
                 setToBroke = false;
                 broken = false;
-//                Coin.mushrooms--;
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(getFrame(0.001f));
 

@@ -15,13 +15,17 @@ import com.electric.game.Sprites.*;
 public class B2WorldCreator {
     private Array<Robot> robots;
     private Array<RobotSvarshik> svarshiks;
+    private Array<Cores> coresArray;
     private Array<RobotTable> robotTables;
+    private Array<NadpisNext> nadpisNexts;
 
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(robots);
         enemies.addAll(robotTables);
         enemies.addAll(svarshiks);
+        enemies.addAll(coresArray);
+        enemies.addAll(nadpisNexts);
         return enemies;
     }
 
@@ -89,11 +93,21 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             svarshiks.add(new RobotSvarshik(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
+        coresArray = new Array<Cores>();
+        for(MapObject object:map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            coresArray.add(new Cores(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
         //        robot table
         robotTables = new Array<RobotTable>();
         for(MapObject object:map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             robotTables.add(new RobotTable(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+        nadpisNexts = new Array<NadpisNext>();
+       for(MapObject object:map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        nadpisNexts.add(new NadpisNext(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
     }
 }
