@@ -26,7 +26,7 @@ public class Inoi extends EnemyKanalizatia {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlasInoi().findRegion("иной"), i * 17, 0, 17, 32));
+            frames.add(new TextureRegion(screen.getAtlasInoi().findRegion("иной"), i * 16, 0, 16, 32));
         flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
 

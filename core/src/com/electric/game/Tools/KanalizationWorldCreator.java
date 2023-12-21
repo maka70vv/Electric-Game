@@ -14,10 +14,12 @@ import com.electric.game.Sprites.*;
 
 public class KanalizationWorldCreator {
     private Array<Inoi> inoiRobots;
+    private Array<JadroBlue> jadros;
 
     public Array<EnemyKanalizatia> getEnemiesKanalizatia(){
         Array<EnemyKanalizatia> enemiesKanalizatia = new Array<EnemyKanalizatia>();
         enemiesKanalizatia.addAll(inoiRobots);
+        enemiesKanalizatia.addAll(jadros);
         return enemiesKanalizatia;
     }
 
@@ -62,10 +64,11 @@ public class KanalizationWorldCreator {
             new EndMap(screen, rect, mainScreen);
         }
 
+
+        jadros = new Array<JadroBlue>();
         for(MapObject object:map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            new JadroBlue(mainScreen, rect, screen);
+            jadros.add(new JadroBlue(screen, rect.x/ElectricGame.PPM, rect.y/ElectricGame.PPM));
         }
 
         //        robot inoi

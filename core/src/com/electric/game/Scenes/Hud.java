@@ -19,7 +19,6 @@ public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
 
-    //Mario score/time Tracking Variables
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
+import com.electric.game.Scenes.Hud;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.Items.Item;
 import com.electric.game.Sprites.Items.ItemDef;
@@ -28,6 +29,7 @@ import com.electric.game.Tools.WorldContactListener;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MainScreen implements Screen {
+//    private Hud hud;
     private final ElectricGame game;
     private final TextureAtlas atlasRobot;
     private final TextureAtlas atlasSvarshik;
@@ -52,6 +54,7 @@ public class MainScreen implements Screen {
     private static float playerY;
 
     public MainScreen(ElectricGame game){
+//        hud = new Hud(game.batch);
 
         atlasRobot = new TextureAtlas("robot.pack");
         atlasPers = new TextureAtlas("pers.pack");
@@ -134,6 +137,7 @@ public class MainScreen implements Screen {
         handleInput(dt);
         handleSpawningItems();
 
+//        hud.update(dt);
 
         world.step(1 / 60f, 6, 2);
         player.update(dt);
@@ -179,12 +183,16 @@ public class MainScreen implements Screen {
         game.batch.enableBlending();
 
         game.batch.begin();
+//        hud.stage.draw();
         player.draw(game.batch);
         for (Enemy enemy : creator.getEnemies())
             enemy.draw(game.batch);
         for (Item item : items){
             item.draw(game.batch);
         }
+
+//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        hud.stage.draw();
 
         game.batch.end();
 

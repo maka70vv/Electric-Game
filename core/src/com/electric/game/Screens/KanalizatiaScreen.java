@@ -153,11 +153,15 @@ public class KanalizatiaScreen implements Screen {
 //        render B2DDebugLines
         b2dr.render(world, gameCam.combined);
 
+
+
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
-
+        for (EnemyKanalizatia enemy : creator.getEnemiesKanalizatia())
+            enemy.draw(game.batch);
         game.batch.end();
+
 
         if (WorldContactListener.redirectMain){
             game.setScreen(new MainScreen(game));
