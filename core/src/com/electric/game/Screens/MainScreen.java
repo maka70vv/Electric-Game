@@ -114,7 +114,6 @@ public class MainScreen implements Screen {
     public TextureAtlas getAtlasSvarshik(){
         return atlasSvarshik;
     }
-
     public TextureAtlas getAtlasPers(){
         return atlasPers;
     }

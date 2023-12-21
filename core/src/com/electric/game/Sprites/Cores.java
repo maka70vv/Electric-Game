@@ -25,7 +25,7 @@ public class Cores extends Enemy {
     public Cores(MainScreen screen, float x, float y) {
         super(screen, x, y);
         cores = 0;
-        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("Ядро синее"), 0, 0, 7, 5));
+        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
 
     }
 
@@ -58,7 +58,7 @@ public class Cores extends Enemy {
     public void update(float dt) {
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("Ядро синее"), 0, 0, 7, 5));
+        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
         if (distance<=0.3f && Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             Hud.addCores(1);
             cores++;

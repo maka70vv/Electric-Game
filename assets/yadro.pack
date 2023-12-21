@@ -1,9 +1,9 @@
-Ядро синее.png
+yadro.png
 size: 7, 5
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Ядро синее
+yadro-blue
   rotate: false
   xy: 0, 0
   size: 7, 5
