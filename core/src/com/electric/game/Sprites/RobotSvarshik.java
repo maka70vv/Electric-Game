@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
+import com.electric.game.Scenes.Hud;
 import com.electric.game.Screens.MainScreen;
 
 public class RobotSvarshik extends Enemy {
@@ -20,10 +21,18 @@ public class RobotSvarshik extends Enemy {
     public static boolean attacking;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
-
+    private int coresCount;
+    private int keys;
 
     public RobotSvarshik(MainScreen screen, float x, float y) {
         super(screen, x, y);
+
+        if (Cores.cores != null)
+            coresCount = Cores.cores;
+        else
+            coresCount = 0;
+        keys = Robot.keys;
+
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик идет"), i * 16, 0, 16, 11));
@@ -102,20 +111,28 @@ public class RobotSvarshik extends Enemy {
 
     @Override
     public void update(float dt) {
+        keys = Robot.keys;
+
+        if (Cores.cores != null) {
+            coresCount = Cores.cores;
+        }else {
+            coresCount = 0;
+        }
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
 
         if (setToBroke && !broken) {
             broken = true;
             timeToDefineBrokenRobot = true;
 
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && broken && coresCount>0) {
             world.destroyBody(b2body);
             defineEnemy();
 
             if (distance < MAX_REPAIR_DISTANCE) {
+                Hud.addCores(-1);
+                Cores.cores--;
                 setToBroke = false;
                 broken = false;
-//                Coin.mushrooms--;
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(getFrame(0.001f));
             }
@@ -131,25 +148,21 @@ public class RobotSvarshik extends Enemy {
                     setToBroke = true;
             } else {
                 setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик стоит"), 0, 0, 16, 11));
-//                setSize(0.17f, 0.32f);
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
             }
         }else {
                 redefineRobot();
                 b2body.setLinearVelocity(0, 0);
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
-//                setSize(0.16f, 0.12f);
                 setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
-
+                if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
+                    keys++;
+                    Hud.addKeys(1);
+                }
             }
         }
 
 
-//    @Override
-//    public void hitOnHead(Electic electic) {
-//        setToBroke = true;
-//        ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
-//    }
 
 
     public void draw(Batch batch) {

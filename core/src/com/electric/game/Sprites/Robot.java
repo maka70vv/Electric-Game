@@ -181,7 +181,7 @@ public class Robot extends Enemy {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
             setSize(0.16f, 0.12f);
             setRegion(new TextureRegion(screen.getAtlasRobot().findRegion("робот-уборщик поломанный"), 0, 0, 16, 12));
-            if (Gdx.input.isKeyJustPressed(Input.Keys.N)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
                 keys++;
                 Hud.addKeys(1);
             }
