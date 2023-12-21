@@ -23,6 +23,7 @@ import com.electric.game.Sprites.Items.Item;
 import com.electric.game.Sprites.Items.ItemDef;
 import com.electric.game.Sprites.Items.Mushroom;
 import com.electric.game.Sprites.Electic;
+import com.electric.game.Sprites.Robot;
 import com.electric.game.Tools.B2WorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
@@ -195,10 +196,13 @@ public class MainScreen implements Screen {
 
 
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E) && Robot.keys>0){
             playerX = Electic.b2body.getPosition().x;
             playerY = Electic.b2body.getPosition().y;
+            Robot.keys--;
+            Hud.addKeys(-1);
             game.setScreen(new KanalizatiaScreen(game));
+            dispose();
         }
 
         if (gameOver()){

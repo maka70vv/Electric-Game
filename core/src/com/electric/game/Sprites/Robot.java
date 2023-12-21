@@ -24,10 +24,12 @@ public class Robot extends Enemy {
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
     private int coresCount;
+    public static int keys;
 
 
     public Robot(MainScreen screen, float x, float y) {
         super(screen, x, y);
+        keys = 0;
         if (Cores.cores != null)
             coresCount = Cores.cores;
         else
@@ -179,7 +181,10 @@ public class Robot extends Enemy {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
             setSize(0.16f, 0.12f);
             setRegion(new TextureRegion(screen.getAtlasRobot().findRegion("робот-уборщик поломанный"), 0, 0, 16, 12));
-
+            if (Gdx.input.isKeyJustPressed(Input.Keys.N)){
+                keys++;
+                Hud.addKeys(1);
+            }
         }
     }
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
+import com.electric.game.Scenes.Hud;
 import com.electric.game.Sprites.Electic;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.EnemyKanalizatia;
@@ -22,6 +23,7 @@ import com.electric.game.Tools.KanalizationWorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
 public class KanalizatiaScreen implements Screen {
+    private Hud hud;
     private final ElectricGame game;
     private final TextureAtlas atlas;
     private final TextureAtlas atlasInoi;
@@ -45,6 +47,8 @@ public class KanalizatiaScreen implements Screen {
 
 
     public KanalizatiaScreen(ElectricGame game){
+        hud = new Hud(game.batch);
+
         atlas = new TextureAtlas("pers.pack");
         atlasInoi = new TextureAtlas("inoi.pack");
         atlasJadro = new TextureAtlas("yadro.pack");
@@ -116,6 +120,8 @@ public class KanalizatiaScreen implements Screen {
 
     public void update(float dt) {
         handleInput(dt);
+        hud.update(dt);
+
 
         world.step(1 / 60f, 6, 2);
         player.update(dt);
@@ -161,10 +167,14 @@ public class KanalizatiaScreen implements Screen {
         for (EnemyKanalizatia enemy : creator.getEnemiesKanalizatia())
             enemy.draw(game.batch);
         game.batch.end();
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
 
 
         if (WorldContactListener.redirectMain){
             game.setScreen(new MainScreen(game));
+            dispose();
         }
 
         if (gameOver()){
