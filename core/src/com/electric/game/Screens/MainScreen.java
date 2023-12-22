@@ -22,9 +22,6 @@ import com.electric.game.Sprites.Robot;
 import com.electric.game.Tools.B2WorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
-
-import java.util.concurrent.LinkedBlockingQueue;
-
 public class MainScreen implements Screen {
     private Hud hud;
     private final ElectricGame game;
