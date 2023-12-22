@@ -37,7 +37,6 @@ public class KanalizatiaScreen implements Screen {
     private final OrthogonalTiledMapRenderer renderer;
 
     private final World world;
-    private final Box2DDebugRenderer b2dr;
     private final KanalizationWorldCreator creator;
     private final Electic player;
     private final Music music;
@@ -72,7 +71,6 @@ public class KanalizatiaScreen implements Screen {
 
 
         world = new World(new Vector2(0, -10), true);
-        b2dr = new Box2DDebugRenderer();
 
         creator = new KanalizationWorldCreator(this, mainScreen);
 
@@ -166,10 +164,6 @@ public class KanalizatiaScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        render map
         renderer.render();
-//        render B2DDebugLines
-//        b2dr.render(world, gameCam.combined);
-
-
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
@@ -179,8 +173,6 @@ public class KanalizatiaScreen implements Screen {
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
-
 
         if (WorldContactListener.redirectMain || Gdx.input.isKeyJustPressed(Input.Keys.E)){
             game.setScreen(new MainScreen(game));
@@ -230,7 +222,6 @@ public class KanalizatiaScreen implements Screen {
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
     }
 
     public Electic getPlayer() {
