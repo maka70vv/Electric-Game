@@ -44,7 +44,6 @@ public class MainScreen implements Screen {
     public static boolean main;
     private KanalizatiaScreen kanalizatiaScreen;
     private static float playerX;
-    private static float playerY;
 
     public MainScreen(ElectricGame game){
         hud = new Hud(game.batch);
@@ -187,7 +186,6 @@ public class MainScreen implements Screen {
 
         if (WorldContactListener.redirectParallel || Gdx.input.isKeyJustPressed(Input.Keys.E)){
             playerX = Electic.b2body.getPosition().x;
-            playerY = Electic.b2body.getPosition().y;
             game.setScreen(new KanalizatiaScreen(game));
         }
 
