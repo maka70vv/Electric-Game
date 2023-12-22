@@ -17,9 +17,6 @@ public class GameOverScreen implements Screen {
     private BitmapFont font;
     public static boolean gameOver;
 
-
-
-
     public GameOverScreen(ElectricGame game){
         this.game = game;
         camera = new OrthographicCamera();
@@ -29,8 +26,6 @@ public class GameOverScreen implements Screen {
         font.getData().setScale(2);
         gameOver = true;
     }
-
-
 
     @Override
     public void show() {
@@ -58,17 +53,12 @@ public class GameOverScreen implements Screen {
         Electic.electricIsDead = false;
         if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))
             game.setScreen(new MainScreen(game));
-
-
     }
-
 
     @Override
     public void resize(int width, int height) {
 
     }
-
-
 
     @Override
     public void pause() {
