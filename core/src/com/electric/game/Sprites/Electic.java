@@ -38,16 +38,9 @@ public class Electic extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     public static boolean electricIsDead;
-
-
-    Texture blank;
-
-
-
     private static final float HEALTH_BAR_WIDTH = 32 / ElectricGame.PPM;
     private static final float HEALTH_BAR_HEIGHT = 4 / ElectricGame.PPM;
     private static final float HEALTH_BAR_OFFSET_Y = 0.02f;
-
 
     public Electic(MainScreen screen, KanalizatiaScreen kanalizatiaScreen) {
         if (main && !kanalizatia) {

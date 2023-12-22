@@ -114,8 +114,6 @@ public class Boss extends Enemy {
         if (setToBroke && !broken) {
             broken = true;
             timeToDefineBrokenRobot = true;
-
-
         } else if (!broken) {
             if (distance < START_WALKING_DISTANCE) {
                 b2body.setLinearVelocity(velocity);
@@ -146,9 +144,6 @@ public class Boss extends Enemy {
             }
         }
     }
-
-
-
 
     @Override
     public void draw(Batch batch) {

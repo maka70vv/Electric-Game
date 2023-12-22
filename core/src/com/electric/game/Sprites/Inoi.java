@@ -19,9 +19,6 @@ public class Inoi extends EnemyKanalizatia {
     private final Animation<TextureRegion> flying;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
 
-
-
-
     public Inoi(KanalizatiaScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
@@ -29,9 +26,7 @@ public class Inoi extends EnemyKanalizatia {
             frames.add(new TextureRegion(screen.getAtlasInoi().findRegion("иной"), i * 16, 0, 16, 32));
         flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
-
     }
-
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
@@ -80,7 +75,6 @@ public class Inoi extends EnemyKanalizatia {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
-
 
     public void draw(Batch batch) {
         super.draw(batch);
