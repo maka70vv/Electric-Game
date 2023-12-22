@@ -44,7 +44,6 @@ public class KanalizatiaScreen implements Screen {
 
     public static boolean kanalizatia;
     private MainScreen mainScreen;
-    private ParallelScreen parallelScreen;
     public static boolean wasDead;
 
 
@@ -59,7 +58,6 @@ public class KanalizatiaScreen implements Screen {
 
 
 
-        ParallelScreen.parallel = false;
         MainScreen.main = false;
         kanalizatia=true;
 
@@ -78,7 +76,7 @@ public class KanalizatiaScreen implements Screen {
 
         creator = new KanalizationWorldCreator(this, mainScreen);
 
-        player = new Electic(mainScreen, parallelScreen, this);
+        player = new Electic(mainScreen,this);
 
         world.setContactListener(new WorldContactListener());
 

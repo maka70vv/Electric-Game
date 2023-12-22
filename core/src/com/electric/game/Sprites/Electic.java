@@ -14,12 +14,9 @@ import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
-import com.electric.game.Screens.ParallelScreen;
 
 import static com.electric.game.Screens.KanalizatiaScreen.kanalizatia;
 import static com.electric.game.Screens.MainScreen.main;
-import static com.electric.game.Screens.ParallelScreen.parallel;
-
 
 public class Electic extends Sprite {
 
@@ -52,12 +49,10 @@ public class Electic extends Sprite {
     private static final float HEALTH_BAR_OFFSET_Y = 0.02f;
 
 
-    public Electic(MainScreen screen, ParallelScreen parallelScreen, KanalizatiaScreen kanalizatiaScreen) {
-        if (main && !parallel && !kanalizatia) {
+    public Electic(MainScreen screen, KanalizatiaScreen kanalizatiaScreen) {
+        if (main && !kanalizatia) {
             this.world = screen.getWorld();
-        } else if (parallel && !main && !kanalizatia) {
-            this.world = parallelScreen.getWorld();
-        } else if (kanalizatia && !main && !parallel) {
+        } else if (kanalizatia && !main) {
             this.world = kanalizatiaScreen.getWorld();
         }
         currentState = State.STANDING;
@@ -69,7 +64,7 @@ public class Electic extends Sprite {
 
         Array<TextureRegion> frames = new Array<>();
 // in main screen
-        if (main && !parallel && !kanalizatia) {
+        if (main && !kanalizatia) {
 //            run
             for (int i = 0; i < 8; i++) {
                 frames.add(new TextureRegion(screen.getAtlasPers().findRegion("персонаж"), i * 16, 0, 16, 32));
@@ -87,34 +82,9 @@ public class Electic extends Sprite {
             setBounds(0, 0, 16 / ElectricGame.PPM, 16 / ElectricGame.PPM);
             setRegion(electricStand);
         }
-// in parallel screen
-        else if (parallel && !main && !kanalizatia) {
-//            run
-            for (int i = 1; i < 4; i++) {
-                frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
-            }
-            electricRun = new Animation<>(0.1f, frames);
-
-            frames.clear();
-
-            electricStand = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
-
-            electricDie = new TextureRegion(parallelScreen.getAtlas().findRegion("little_mario"), 0, 0, 17, 32);
-
-            definePlayer();
-
-            setBounds(0, 0, 16 / ElectricGame.PPM, 16 / ElectricGame.PPM);
-            setRegion(electricStand);
-
-//        mario grow
-            frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
-            frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
-            frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
-            frames.add(new TextureRegion(parallelScreen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
-        }
 
     // in kanalizatia screen
-        else if (!parallel && !main && kanalizatia) {
+        else if (!main && kanalizatia) {
             for (int i = 0; i < 8; i++) {
                 frames.add(new TextureRegion(kanalizatiaScreen.getAtlas().findRegion("персонаж"), i * 16, 0, 16, 32));
             }

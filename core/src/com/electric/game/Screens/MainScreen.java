@@ -42,7 +42,6 @@ public class MainScreen implements Screen {
     private final Electic player;
     private final Music music;
     public static boolean main;
-    private ParallelScreen parallelScreen;
     private KanalizatiaScreen kanalizatiaScreen;
     private static float playerX;
     private static float playerY;
@@ -74,11 +73,8 @@ public class MainScreen implements Screen {
 
         creator = new B2WorldCreator(this, kanalizatiaScreen);
 
-        player = new Electic(this, parallelScreen, kanalizatiaScreen);
-        if (playerX > 0 && !ParallelScreen.wasDead)
-            Electic.b2body.setTransform(playerX + 0.3f, playerY, 0);
-        else
-            Electic.b2body.setTransform(0, 1, 0);
+        player = new Electic(this, kanalizatiaScreen);
+        Electic.b2body.setTransform(playerX, 1, 0);
 
         world.setContactListener(new WorldContactListener());
 
