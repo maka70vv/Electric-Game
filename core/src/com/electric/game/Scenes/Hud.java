@@ -34,9 +34,9 @@ public class Hud implements Disposable{
 
     public Hud(SpriteBatch sb){
 
-        keys = 0;
-        coresBlue = 0;
-        cores = 0;
+        keys = ElectricGame.keys;
+        coresBlue = ElectricGame.blueCores;
+        cores = ElectricGame.yellowCores;
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
         viewport = new FitViewport(ElectricGame.V_WIDTH, ElectricGame.V_HEIGHT, new OrthographicCamera());
