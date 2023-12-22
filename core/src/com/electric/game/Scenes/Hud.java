@@ -35,7 +35,7 @@ public class Hud implements Disposable{
     public Hud(SpriteBatch sb){
 
         keys = 0;
-        coresBlue = 1;
+        coresBlue = 0;
         cores = 0;
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
@@ -51,7 +51,7 @@ public class Hud implements Disposable{
 
         //define our labels using the String, and a Label style consisting of a font and color
         keysCounter =new Label(String.format("%06d", keys), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        coresCounter =new Label(String.format("%06d", coresBlue), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coresBlueCounter =new Label(String.format("%06d", coresBlue), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         coresCounter =new Label(String.format("%06d", cores), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         coresLabel = new Label("CORES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         keysLabel = new Label("KEYS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));

@@ -24,7 +24,7 @@ import static com.electric.game.Screens.ParallelScreen.parallel;
 public class Electic extends Sprite {
 
     public void decreaseHealth() {
-        hp-=10;
+        ElectricGame.hpPlayer-=10;
     }
 
     public enum State {FALLING, STANDING, RUNNING, DEAD}
@@ -42,7 +42,6 @@ public class Electic extends Sprite {
     private boolean runningRight;
     public static boolean electricIsDead;
 
-    public static Integer hp;
 
     Texture blank;
 
@@ -63,7 +62,7 @@ public class Electic extends Sprite {
         }
         currentState = State.STANDING;
         previousState = State.STANDING;
-        hp = 100;
+        ElectricGame.hpPlayer = 100;
         stateTimer = 0;
         runningRight = true;
         electricIsDead = false;
@@ -141,7 +140,7 @@ public class Electic extends Sprite {
 
         setRegion(getFrame(dt));
 
-        if (b2body.getPosition().y < 0 || hp <= 0){
+        if (b2body.getPosition().y < 0 || ElectricGame.hpPlayer <= 0){
             electricIsDead = true;
         }
     }
@@ -234,9 +233,9 @@ public class Electic extends Sprite {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        if (hp > 0) {
+        if (ElectricGame.hpPlayer > 0) {
             batch.draw(getHealthBarRegion(), b2body.getPosition().x - HEALTH_BAR_WIDTH / 2, b2body.getPosition().y + HEALTH_BAR_OFFSET_Y + 20/ElectricGame.PPM,
-                    HEALTH_BAR_WIDTH * (hp / 100f), HEALTH_BAR_HEIGHT);
+                    HEALTH_BAR_WIDTH * (ElectricGame.hpPlayer / 100f), HEALTH_BAR_HEIGHT);
         }
     }
 
@@ -251,9 +250,9 @@ public class Electic extends Sprite {
     }
 
     private Color getColorByHealth() {
-        if (hp > 70) {
+        if (ElectricGame.hpPlayer > 70) {
             return Color.GREEN;
-        } else if (hp > 30) {
+        } else if (ElectricGame.hpPlayer > 30) {
             return Color.YELLOW;
         } else {
             return Color.RED;

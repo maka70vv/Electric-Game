@@ -24,22 +24,12 @@ public class Boss extends Enemy {
     public static boolean attacking;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
-    private int coresCount;
-    private int keys;
-    private static int hp;
     private static final float HEALTH_BAR_WIDTH = 32 / ElectricGame.PPM;
     private static final float HEALTH_BAR_HEIGHT = 4 / ElectricGame.PPM;
     private static final float HEALTH_BAR_OFFSET_Y = 0.02f;
 
     public Boss(MainScreen screen, float x, float y) {
         super(screen, x, y);
-        hp = 100;
-
-        if (Cores.cores != null)
-            coresCount = Cores.cores;
-        else
-            coresCount = 0;
-        keys = Robot.keys;
 
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
@@ -119,13 +109,6 @@ public class Boss extends Enemy {
 
     @Override
     public void update(float dt) {
-        keys = Robot.keys;
-
-        if (Cores.cores != null) {
-            coresCount = Cores.cores;
-        }else {
-            coresCount = 0;
-        }
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
 
         if (setToBroke && !broken) {
@@ -141,11 +124,11 @@ public class Boss extends Enemy {
                 if (distance <= MAX_REPAIR_DISTANCE)
                     attacking = true;
 
-                if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R) && keys>0) {
-                    hp -= 10;
-                    Robot.keys--;
+                if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R) && ElectricGame.keys>0) {
+                    ElectricGame.hpBoss -= 10;
+                    ElectricGame.keys--;
                     Hud.addKeys(-1);
-                    if (hp==0)
+                    if (ElectricGame.hpBoss==0)
                         setToBroke = true;
                 }
             } else {
@@ -158,8 +141,7 @@ public class Boss extends Enemy {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
             setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
             if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
-                Robot.keys++;
-                keys++;
+                ElectricGame.keys++;
                 Hud.addKeys(1);
             }
         }
@@ -171,9 +153,9 @@ public class Boss extends Enemy {
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
-        if (hp > 0) {
+        if (ElectricGame.hpBoss > 0) {
             batch.draw(getHealthBarRegion(), b2body.getPosition().x - HEALTH_BAR_WIDTH / 2, b2body.getPosition().y + HEALTH_BAR_OFFSET_Y + 20/ElectricGame.PPM,
-                    HEALTH_BAR_WIDTH * (hp / 100f), HEALTH_BAR_HEIGHT);
+                    HEALTH_BAR_WIDTH * (ElectricGame.hpBoss / 100f), HEALTH_BAR_HEIGHT);
         }
     }
 
@@ -188,9 +170,9 @@ public class Boss extends Enemy {
     }
 
     private Color getColorByHealth() {
-        if (hp > 70) {
+        if (ElectricGame.hpBoss > 70) {
             return Color.GREEN;
-        } else if (hp > 30) {
+        } else if (ElectricGame.hpBoss > 30) {
             return Color.YELLOW;
         } else {
             return Color.RED;

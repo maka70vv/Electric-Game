@@ -22,10 +22,14 @@ public class ElectricGame extends Game {
 	public static final short ROBOT_BIT = 64;
 	public static final short SVARSHIK_BIT = 128;
 	public static final short ITEM_BIT = 256;
-	public static final short MARIO_HEAD_BIT = 512;
 	public static final short LESTNITSA_BIT = 1024;
 	public static final short STORY_BIT = 2048;
 	public static final short END_MAP_BIT = 4096;
+	public static int hpPlayer = 100;
+	public static int hpBoss = 100;
+	public static int yellowCores = 0;
+	public static int blueCores = 0;
+	public static int keys = 0;
 
 
 	public SpriteBatch batch;

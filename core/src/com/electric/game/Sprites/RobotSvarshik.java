@@ -21,18 +21,9 @@ public class RobotSvarshik extends Enemy {
     public static boolean attacking;
     private boolean timeToRedefineRobot;
     private boolean timeToDefineBrokenRobot;
-    private int coresCount;
-    private int keys;
 
     public RobotSvarshik(MainScreen screen, float x, float y) {
         super(screen, x, y);
-
-        if (Cores.cores != null)
-            coresCount = Cores.cores;
-        else
-            coresCount = 0;
-        keys = Robot.keys;
-
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик идет"), i * 16, 0, 16, 11));
@@ -111,13 +102,6 @@ public class RobotSvarshik extends Enemy {
 
     @Override
     public void update(float dt) {
-        keys = Robot.keys;
-
-        if (Cores.cores != null) {
-            coresCount = Cores.cores;
-        }else {
-            coresCount = 0;
-        }
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
 
         if (setToBroke && !broken) {
@@ -145,8 +129,7 @@ public class RobotSvarshik extends Enemy {
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
                 if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
-                    Robot.keys++;
-                    keys++;
+                    ElectricGame.keys++;
                     Hud.addKeys(1);
                 }
             }

@@ -18,7 +18,6 @@ import com.electric.game.ElectricGame;
 import com.electric.game.Scenes.Hud;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.Electic;
-import com.electric.game.Sprites.Robot;
 import com.electric.game.Tools.B2WorldCreator;
 import com.electric.game.Tools.WorldContactListener;
 
@@ -30,6 +29,7 @@ public class MainScreen implements Screen {
     private final TextureAtlas atlasNadpis;
     private final TextureAtlas atlasPers;
     private final TextureAtlas atlasJadro;
+    private final TextureAtlas atlasBlueRobot;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -49,13 +49,12 @@ public class MainScreen implements Screen {
 
     public MainScreen(ElectricGame game){
         hud = new Hud(game.batch);
-
         atlasRobot = new TextureAtlas("robot.pack");
         atlasPers = new TextureAtlas("pers.pack");
         atlasSvarshik = new TextureAtlas("svarshik.pack");
         atlasNadpis = new TextureAtlas("nadpis2.pack");
         atlasJadro = new TextureAtlas("yadro.pack");
-
+        atlasBlueRobot = new TextureAtlas("blueRobot.pack");
 
         main = true;
         KanalizatiaScreen.kanalizatia = false;
@@ -104,6 +103,9 @@ public class MainScreen implements Screen {
     }
     public TextureAtlas getAtlasPers(){
         return atlasPers;
+    }
+    public TextureAtlas getAtlasBlueRobot(){
+        return atlasBlueRobot;
     }
 
 
@@ -190,10 +192,7 @@ public class MainScreen implements Screen {
         if (WorldContactListener.redirectParallel || Gdx.input.isKeyJustPressed(Input.Keys.E)){
             playerX = Electic.b2body.getPosition().x;
             playerY = Electic.b2body.getPosition().y;
-            Robot.keys--;
-            Hud.addKeys(-1);
             game.setScreen(new KanalizatiaScreen(game));
-            dispose();
         }
 
         if (gameOver()){

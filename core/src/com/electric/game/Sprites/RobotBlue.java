@@ -12,14 +12,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.electric.game.ElectricGame;
 import com.electric.game.Scenes.Hud;
+import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 
-public class Robot extends Enemy {
+public class RobotBlue extends EnemyKanalizatia {
     private float stateTime;
-    private  Animation<TextureRegion> flying;
-    private  Animation<TextureRegion> flyingBlue;
+    private final Animation<TextureRegion> flying;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
-    private Array<TextureRegion> framesBlue = new Array<TextureRegion>();
     private boolean setToBroke;
     public static boolean broken;
     private final float defaultY;
@@ -29,19 +28,13 @@ public class Robot extends Enemy {
 
 
 
-    public Robot(MainScreen screen, float x, float y) {
+    public RobotBlue(KanalizatiaScreen screen, float x, float y) {
         super(screen, x, y);
-
-            framesBlue = new Array<TextureRegion>();
-            for (int i = 0; i < 4; i++)
-                framesBlue.add(new TextureRegion(screen.getAtlasBlueRobot().findRegion("робот-уборщик синий"), i * 17, 0, 17, 32));
-            flyingBlue = new Animation<TextureRegion>(0.2f, framesBlue);
-
-            frames = new Array<TextureRegion>();
-            for (int i = 0; i < 4; i++)
-                frames.add(new TextureRegion(screen.getAtlasRobot().findRegion("робот-уборщик1"), i * 17, 0, 17, 32));
-            flying = new Animation<TextureRegion>(0.2f, frames);
-
+        repairedWithBlueCore = false;
+        frames = new Array<TextureRegion>();
+        for (int i = 0; i < 4; i++)
+            frames.add(new TextureRegion(screen.getAtlasBlueRobot().findRegion("робот-уборщик синий"), i * 17, 0, 17, 32));
+        flying = new Animation<TextureRegion>(0.2f, frames);
         setBounds(getX(), getY(), 16 / ElectricGame.PPM, 24 / ElectricGame.PPM);
         setToBroke = false;
         broken = true;
@@ -114,10 +107,7 @@ public class Robot extends Enemy {
 
     public TextureRegion getFrame(float dt) {
         TextureRegion region;
-        if (repairedWithBlueCore)
-            region = flyingBlue.getKeyFrame(stateTime, true);
-        else
-            region = flying.getKeyFrame(stateTime, true);
+        region = flying.getKeyFrame(stateTime, true);
 
         stateTime = stateTime + dt;
         return region;
@@ -176,7 +166,7 @@ public class Robot extends Enemy {
 
             if (distance < MAX_REPAIR_DISTANCE) {
                 repairedWithBlueCore = true;
-                Hud.addCoresBlue(-1);
+                Hud.addCores(-1);
                 ElectricGame.blueCores--;
                 setToBroke = false;
                 broken = false;

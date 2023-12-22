@@ -28,6 +28,8 @@ public class KanalizatiaScreen implements Screen {
     private final TextureAtlas atlas;
     private final TextureAtlas atlasInoi;
     private final TextureAtlas atlasJadro;
+    private final TextureAtlas atlasRobot;
+    private final TextureAtlas atlasBlueRobot;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -52,6 +54,10 @@ public class KanalizatiaScreen implements Screen {
         atlas = new TextureAtlas("pers.pack");
         atlasInoi = new TextureAtlas("inoi.pack");
         atlasJadro = new TextureAtlas("yadro.pack");
+        atlasBlueRobot = new TextureAtlas("blueRobot.pack");
+        atlasRobot = new TextureAtlas("robot.pack");
+
+
 
         ParallelScreen.parallel = false;
         MainScreen.main = false;
@@ -91,6 +97,12 @@ public class KanalizatiaScreen implements Screen {
     }
     public TextureAtlas getAtlasJadro(){
         return atlasJadro;
+    }
+    public TextureAtlas getAtlasRobot(){
+        return atlasRobot;
+    }
+    public TextureAtlas getAtlasBlueRobot(){
+        return atlasBlueRobot;
     }
 
     @Override
@@ -172,9 +184,8 @@ public class KanalizatiaScreen implements Screen {
 
 
 
-        if (WorldContactListener.redirectMain){
+        if (WorldContactListener.redirectMain || Gdx.input.isKeyJustPressed(Input.Keys.E)){
             game.setScreen(new MainScreen(game));
-            dispose();
         }
 
         if (gameOver()){

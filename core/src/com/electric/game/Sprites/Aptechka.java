@@ -58,7 +58,7 @@ public class Aptechka extends Enemy {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
         if (distance<=0.3f && Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            Electic.hp = 100;
+            ElectricGame.hpPlayer = 100;
         }
     }
 }

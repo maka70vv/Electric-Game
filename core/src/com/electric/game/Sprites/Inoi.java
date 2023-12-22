@@ -46,9 +46,7 @@ public class Inoi extends EnemyKanalizatia {
                 ElectricGame.SVARSHIK_PLACE_BIT |
                 ElectricGame.ROBOT_BIT |
                 ElectricGame.OBJECT_BIT |
-                ElectricGame.PARALLEL_BIT |
-                ElectricGame.ELECTRIC_BIT;
-
+                ElectricGame.PARALLEL_BIT;
         fdef.shape = shape;
         fdef.restitution = 0.5f;
         b2body.createFixture(fdef).setUserData(this);
@@ -83,12 +81,6 @@ public class Inoi extends EnemyKanalizatia {
         setRegion(getFrame(dt));
     }
 
-
-//    @Override
-//    public void hitOnHead(Electic electic) {
-//        setToBroke = true;
-//        ElectricGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();
-//    }
 
     public void draw(Batch batch) {
         super.draw(batch);
