@@ -37,7 +37,6 @@ public class MainScreen implements Screen {
     private final OrthogonalTiledMapRenderer renderer;
 
     private final World world;
-    private final Box2DDebugRenderer b2dr;
     private final B2WorldCreator creator;
     private final Electic player;
     private final Music music;
@@ -68,7 +67,6 @@ public class MainScreen implements Screen {
 
 
         world = new World(new Vector2(0, -10), true);
-        b2dr = new Box2DDebugRenderer();
 
         creator = new B2WorldCreator(this, kanalizatiaScreen);
 
@@ -167,8 +165,6 @@ public class MainScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        render map
         renderer.render();
-//        render B2DDebugLines
-//        b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.enableBlending();
@@ -232,7 +228,6 @@ public class MainScreen implements Screen {
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
     }
 
     public Electic getPlayer() {
