@@ -19,7 +19,7 @@ public class JadroBlue extends EnemyKanalizatia {
 
     public JadroBlue(KanalizatiaScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("Ядро синее"), 0, 0, 7, 5));
+        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
 
     }
 
@@ -51,7 +51,7 @@ public class JadroBlue extends EnemyKanalizatia {
     @Override
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("Ядро синее"), 0, 0, 7, 5));
+        setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
     }
 
 }

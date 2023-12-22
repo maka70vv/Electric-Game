@@ -12,16 +12,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.electric.game.ElectricGame;
 import com.electric.game.Scenes.Hud;
-import com.electric.game.Sprites.Cores;
 import com.electric.game.Sprites.Enemy;
-import com.electric.game.Sprites.Items.Item;
-import com.electric.game.Sprites.Items.ItemDef;
-import com.electric.game.Sprites.Items.Mushroom;
 import com.electric.game.Sprites.Electic;
 import com.electric.game.Sprites.Robot;
 import com.electric.game.Tools.B2WorldCreator;
@@ -49,8 +44,6 @@ public class MainScreen implements Screen {
     private final B2WorldCreator creator;
     private final Electic player;
     private final Music music;
-    private final Array<Item> items;
-    private final LinkedBlockingQueue<ItemDef> itemsToSpawn;
     public static boolean main;
     private ParallelScreen parallelScreen;
     private KanalizatiaScreen kanalizatiaScreen;
@@ -58,6 +51,8 @@ public class MainScreen implements Screen {
     private static float playerY;
 
     public MainScreen(ElectricGame game){
+        WorldContactListener.redirectParallel = false;
+        WorldContactListener.redirectMain = false;
         hud = new Hud(game.batch);
 
         atlasRobot = new TextureAtlas("robot.pack");
@@ -97,8 +92,6 @@ public class MainScreen implements Screen {
         music.setLooping(true);
         music.play();
 
-        items = new Array<>();
-        itemsToSpawn = new LinkedBlockingQueue<>();
 
     }
 
@@ -147,10 +140,6 @@ public class MainScreen implements Screen {
             }
         }
 
-        for (Item item : items) {
-            item.update(dt);
-        }
-
 
         if (Electic.currentState != Electic.State.DEAD) {
             if (gameCam.position.x < Electic.b2body.getPosition().x) {
@@ -185,9 +174,6 @@ public class MainScreen implements Screen {
         player.draw(game.batch);
         for (Enemy enemy : creator.getEnemies())
             enemy.draw(game.batch);
-        for (Item item : items){
-            item.draw(game.batch);
-        }
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);

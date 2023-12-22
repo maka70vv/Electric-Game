@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Sprites.Enemy;
-import com.electric.game.Sprites.Items.Item;
 import com.electric.game.Sprites.Electic;
 
 public class WorldContactListener implements ContactListener {
@@ -52,18 +51,6 @@ public class WorldContactListener implements ContactListener {
                     ((Electic) fixA.getUserData()).decreaseHealth();
                 else
                     ((Electic) fixB.getUserData()).decreaseHealth();
-                break;
-            case ElectricGame.ITEM_BIT | ElectricGame.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == ElectricGame.ITEM_BIT)
-                    ((Item) fixA.getUserData()).reverseVelocity(true, false);
-                else
-                    ((Item) fixB.getUserData()).reverseVelocity(true, false);
-                break;
-            case ElectricGame.ITEM_BIT | ElectricGame.ELECTRIC_BIT:
-                if (fixA.getFilterData().categoryBits == ElectricGame.ITEM_BIT)
-                    ((Item) fixA.getUserData()).use((Electic) fixB.getUserData());
-                else
-                    ((Item) fixB.getUserData()).use((Electic) fixA.getUserData());
                 break;
         }
     }

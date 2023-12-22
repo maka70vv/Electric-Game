@@ -156,6 +156,7 @@ public class RobotSvarshik extends Enemy {
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
                 setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
                 if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
+                    Robot.keys++;
                     keys++;
                     Hud.addKeys(1);
                 }

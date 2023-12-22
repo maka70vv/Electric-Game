@@ -68,8 +68,6 @@ public class Electic extends Sprite {
         runningRight = true;
         electricIsDead = false;
 
-//        shapeRenderer = new ShapeRenderer();
-
         Array<TextureRegion> frames = new Array<>();
 // in main screen
         if (main && !parallel && !kanalizatia) {
