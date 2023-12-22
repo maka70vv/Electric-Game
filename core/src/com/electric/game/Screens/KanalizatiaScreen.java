@@ -223,4 +223,8 @@ public class KanalizatiaScreen implements Screen {
         world.dispose();
         b2dr.dispose();
     }
+
+    public Electic getPlayer() {
+        return player;
+    }
 }

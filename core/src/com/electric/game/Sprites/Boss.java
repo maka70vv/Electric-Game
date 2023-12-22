@@ -2,6 +2,9 @@ package com.electric.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,7 +15,7 @@ import com.electric.game.ElectricGame;
 import com.electric.game.Scenes.Hud;
 import com.electric.game.Screens.MainScreen;
 
-public class RobotSvarshik extends Enemy {
+public class Boss extends Enemy {
     private float stateTime;
     private final Animation<TextureRegion> walking;
     private Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -23,9 +26,14 @@ public class RobotSvarshik extends Enemy {
     private boolean timeToDefineBrokenRobot;
     private int coresCount;
     private int keys;
+    private static int hp;
+    private static final float HEALTH_BAR_WIDTH = 32 / ElectricGame.PPM;
+    private static final float HEALTH_BAR_HEIGHT = 4 / ElectricGame.PPM;
+    private static final float HEALTH_BAR_OFFSET_Y = 0.02f;
 
-    public RobotSvarshik(MainScreen screen, float x, float y) {
+    public Boss(MainScreen screen, float x, float y) {
         super(screen, x, y);
+        hp = 100;
 
         if (Cores.cores != null)
             coresCount = Cores.cores;
@@ -133,30 +141,59 @@ public class RobotSvarshik extends Enemy {
                 if (distance <= MAX_REPAIR_DISTANCE)
                     attacking = true;
 
-                if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R))
-                    setToBroke = true;
+                if (distance <= MAX_REPAIR_DISTANCE && Gdx.input.isKeyJustPressed(Input.Keys.R) && keys>0) {
+                    hp -= 10;
+                    Robot.keys--;
+                    Hud.addKeys(-1);
+                    if (hp==0)
+                        setToBroke = true;
+                }
             } else {
                 setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик стоит"), 0, 0, 16, 11));
                 setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
             }
         }else {
-                redefineRobot();
-                b2body.setLinearVelocity(0, 0);
-                setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
-                setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
-                if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
-                    Robot.keys++;
-                    keys++;
-                    Hud.addKeys(1);
-                }
+            redefineRobot();
+            b2body.setLinearVelocity(0, 0);
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+            setRegion(new TextureRegion(screen.getAtlasSvarshik().findRegion("робот-сварщик поломанный"), 0, 0, 16, 11));
+            if (Gdx.input.isKeyJustPressed(Input.Keys.N) && distance<MAX_REPAIR_DISTANCE){
+                Robot.keys++;
+                keys++;
+                Hud.addKeys(1);
             }
         }
-
-
-
-
-    public void draw(Batch batch) {
-        super.draw(batch);
     }
 
+
+
+
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
+        if (hp > 0) {
+            batch.draw(getHealthBarRegion(), b2body.getPosition().x - HEALTH_BAR_WIDTH / 2, b2body.getPosition().y + HEALTH_BAR_OFFSET_Y + 20/ElectricGame.PPM,
+                    HEALTH_BAR_WIDTH * (hp / 100f), HEALTH_BAR_HEIGHT);
+        }
+    }
+
+    private TextureRegion getHealthBarRegion() {
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(getColorByHealth());
+        pixmap.fill();
+        TextureRegion textureRegion = new TextureRegion(new Texture(pixmap));
+        pixmap.dispose();
+        return textureRegion;
+    }
+
+    private Color getColorByHealth() {
+        if (hp > 70) {
+            return Color.GREEN;
+        } else if (hp > 30) {
+            return Color.YELLOW;
+        } else {
+            return Color.RED;
+        }
+    }
 }

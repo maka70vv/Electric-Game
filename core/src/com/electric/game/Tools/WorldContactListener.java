@@ -3,6 +3,7 @@ package com.electric.game.Tools;
 import com.badlogic.gdx.physics.box2d.*;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
+import com.electric.game.Screens.MainScreen;
 import com.electric.game.Sprites.Enemy;
 import com.electric.game.Sprites.Electic;
 
@@ -22,15 +23,14 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
-//            case ElectricGame.ELECTRIC_BIT | ElectricGame.GROUND_BIT:
-//                redirectParallel = false;
-//                break;
             case ElectricGame.ELECTRIC_BIT | ElectricGame.LESTNITSA_BIT:
                 climb = true;
                 break;
             case ElectricGame.ELECTRIC_BIT | ElectricGame.END_MAP_BIT:
                 if (KanalizatiaScreen.kanalizatia)
                     redirectMain = true;
+                if (MainScreen.main)
+                    redirectParallel = true;
                 break;
             case ElectricGame.ELECTRIC_BIT | ElectricGame.OBJECT_BIT:
                 redirectMain = true;

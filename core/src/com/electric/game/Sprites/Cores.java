@@ -20,13 +20,13 @@ import com.electric.game.Screens.MainScreen;
 
 public class Cores extends Enemy {
     public static Integer cores;
+    public static boolean destroyed;
 
 
     public Cores(MainScreen screen, float x, float y) {
         super(screen, x, y);
         cores = 0;
         setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
-
     }
 
     @Override
@@ -59,9 +59,10 @@ public class Cores extends Enemy {
         float distance = Math.abs(screen.getPlayer().getX() - b2body.getPosition().x);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
-        if (distance<=0.3f && Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        if (distance<=0.3f && Gdx.input.isKeyJustPressed(Input.Keys.N) && !destroyed) {
             Hud.addCores(1);
             cores++;
+            world.destroyBody(b2body);
         }
     }
 }

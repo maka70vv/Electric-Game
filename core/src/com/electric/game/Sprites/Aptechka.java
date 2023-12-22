@@ -18,13 +18,11 @@ import com.electric.game.Screens.KanalizatiaScreen;
 import com.electric.game.Screens.MainScreen;
 
 
-public class JadroBlue extends EnemyKanalizatia {
-    public static Integer coresBlue;
+public class Aptechka extends Enemy {
 
 
-    public JadroBlue(KanalizatiaScreen screen, float x, float y) {
+    public Aptechka(MainScreen screen, float x, float y) {
         super(screen, x, y);
-        coresBlue = 0;
         setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
 
     }
@@ -60,10 +58,7 @@ public class JadroBlue extends EnemyKanalizatia {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(new TextureRegion(screen.getAtlasJadro().findRegion("yadro-blue"), 0, 0, 7, 5));
         if (distance<=0.3f && Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            Hud.addCores(1);
-            coresBlue++;
-            world.destroyBody(b2body);
+            Electic.hp = 100;
         }
     }
-
 }

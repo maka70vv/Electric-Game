@@ -22,16 +22,20 @@ public class Hud implements Disposable{
 
     private static Integer keys;
     private static Integer cores;
+    private static Integer coresBlue;
 
     //Scene2D widgets
     private static Label keysCounter;
-    private static Label coresConter;
-    private Label worldLabel;
-    private Label marioLabel;
+    private static Label coresCounter;
+    private static Label coresBlueCounter;
+    private Label keysLabel;
+    private Label coresBlueLabel;
+    private Label coresLabel;
 
     public Hud(SpriteBatch sb){
 
         keys = 0;
+        coresBlue = 1;
         cores = 0;
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
@@ -47,18 +51,21 @@ public class Hud implements Disposable{
 
         //define our labels using the String, and a Label style consisting of a font and color
         keysCounter =new Label(String.format("%06d", keys), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
-        coresConter =new Label(String.format("%06d", cores), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        marioLabel = new Label("CORES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("KEYS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coresCounter =new Label(String.format("%06d", coresBlue), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coresCounter =new Label(String.format("%06d", cores), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coresLabel = new Label("CORES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        keysLabel = new Label("KEYS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        coresBlueLabel = new Label("BLUE CORES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
-        table.add(marioLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
+        table.add(coresLabel).expandX().padTop(10);
+        table.add(coresBlueLabel).expandX().padTop(10);
+        table.add(keysLabel).expandX().padTop(10);
         //add a second row to our table
         table.row();
-        table.add(coresConter).expandX();
+        table.add(coresCounter).expandX();
+        table.add(coresBlueCounter).expandX();
         table.add(keysCounter).expandX();
 
 
@@ -77,7 +84,14 @@ public class Hud implements Disposable{
 
     public static void addCores(int value){
         cores += value;
-        coresConter.setText(String.format("%06d", cores));
+        coresCounter.setText(String.format("%06d", cores));
+
+    }
+
+
+    public static void addCoresBlue(int value){
+        coresBlue += value;
+        coresBlueCounter.setText(String.format("%06d", coresBlue));
 
     }
 

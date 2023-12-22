@@ -16,6 +16,8 @@ public class B2WorldCreator {
     private Array<Robot> robots;
     private Array<RobotSvarshik> svarshiks;
     private Array<Cores> coresArray;
+    private Array<Aptechka> aptechkas;
+    private Array<Boss> boss;
     private Array<RobotTable> robotTables;
     private Array<NadpisNext> nadpisNexts;
 
@@ -26,6 +28,8 @@ public class B2WorldCreator {
         enemies.addAll(svarshiks);
         enemies.addAll(coresArray);
         enemies.addAll(nadpisNexts);
+        enemies.addAll(aptechkas);
+        enemies.addAll(boss);
         return enemies;
     }
 
@@ -52,13 +56,6 @@ public class B2WorldCreator {
             body.createFixture(fdef);
         }
 
-//        create shop bodies/fixtures
-//        for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//
-//            new Coin(screen, rect, kanalizatiaScreen);
-//        }
-
 //        create platform bodies/fixtures
         for(MapObject object:map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -78,6 +75,18 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             new SvarshikPlace(screen, rect, kanalizatiaScreen);
+        }
+
+        for(MapObject object:map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new EndMap(kanalizatiaScreen, rect, screen);
+        }
+
+        for(MapObject object:map.getLayers().get(14).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new LestnitsaPlatform(kanalizatiaScreen, rect, screen);
         }
 
 //        robot
@@ -107,7 +116,17 @@ public class B2WorldCreator {
         nadpisNexts = new Array<NadpisNext>();
        for(MapObject object:map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-        nadpisNexts.add(new NadpisNext(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+            nadpisNexts.add(new NadpisNext(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+        boss = new Array<Boss>();
+       for(MapObject object:map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            boss.add(new Boss(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+        aptechkas = new Array<Aptechka>();
+        for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            aptechkas.add(new Aptechka(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
     }
 }

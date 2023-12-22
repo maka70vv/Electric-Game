@@ -48,8 +48,6 @@ public class MainScreen implements Screen {
     private static float playerY;
 
     public MainScreen(ElectricGame game){
-        WorldContactListener.redirectParallel = false;
-        WorldContactListener.redirectMain = false;
         hud = new Hud(game.batch);
 
         atlasRobot = new TextureAtlas("robot.pack");
@@ -79,7 +77,7 @@ public class MainScreen implements Screen {
 
         player = new Electic(this, parallelScreen, kanalizatiaScreen);
         if (playerX > 0 && !ParallelScreen.wasDead)
-            Electic.b2body.setTransform(playerX, playerY, 0);
+            Electic.b2body.setTransform(playerX + 0.3f, playerY, 0);
         else
             Electic.b2body.setTransform(0, 1, 0);
 
@@ -120,6 +118,17 @@ public class MainScreen implements Screen {
                 Electic.b2body.applyLinearImpulse(new Vector2(0.05f, 0), Electic.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && Electic.b2body.getLinearVelocity().x >= -2)
                 Electic.b2body.applyLinearImpulse(new Vector2(-0.05f, 0), Electic.b2body.getWorldCenter(), true);
+            if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))) {
+                float climbSpeed = 0.4f;
+
+                player.b2body.setLinearVelocity(0, climbSpeed);
+            }
+        }
+
+        float playerHeight = Electic.b2body.getPosition().y;
+        if (playerHeight >= 160) {
+            WorldContactListener.climb = false;
+
         }
     }
 
@@ -178,7 +187,7 @@ public class MainScreen implements Screen {
 
 
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E) && Robot.keys>0){
+        if (WorldContactListener.redirectParallel || Gdx.input.isKeyJustPressed(Input.Keys.E)){
             playerX = Electic.b2body.getPosition().x;
             playerY = Electic.b2body.getPosition().y;
             Robot.keys--;
