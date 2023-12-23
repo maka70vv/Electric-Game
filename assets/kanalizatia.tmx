@@ -18,8 +18,7 @@
 </data>
  </layer>
  <objectgroup id="2" name="ground">
-  <object id="1" x="0.538207" y="144.202" width="37.5" height="16"/>
-  <object id="2" x="73.5379" y="144.21" width="198.439" height="16"/>
+  <object id="2" x="-0.00390699" y="144.21" width="271.981" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="yadro">
   <object id="4" x="165.616" y="127.738" width="16" height="16"/>
@@ -27,12 +26,8 @@
  <objectgroup id="5" name="noviy_chel">
   <object id="6" x="86.6667" y="128.333" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="6" name="lestnica">
-  <object id="3" x="38.1667" y="144.23" width="17.5" height="16"/>
- </objectgroup>
- <objectgroup id="7" name="storyPlatform">
-  <object id="5" x="55.8561" y="144.212" width="17.5" height="16"/>
- </objectgroup>
+ <objectgroup id="6" name="lestnica"/>
+ <objectgroup id="7" name="storyPlatform"/>
  <objectgroup id="8" name="robot">
   <object id="7" x="127.832" y="128.139" width="16" height="16"/>
  </objectgroup>

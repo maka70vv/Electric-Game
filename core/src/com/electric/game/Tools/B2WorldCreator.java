@@ -20,6 +20,7 @@ public class B2WorldCreator {
     private Array<Boss> boss;
     private Array<RobotTable> robotTables;
     private Array<NadpisNext> nadpisNexts;
+    private Array<StoryPlatform> stories;
 
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
@@ -30,6 +31,7 @@ public class B2WorldCreator {
         enemies.addAll(nadpisNexts);
         enemies.addAll(aptechkas);
         enemies.addAll(boss);
+        enemies.addAll(stories);
         return enemies;
     }
 
@@ -127,6 +129,11 @@ public class B2WorldCreator {
         for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             aptechkas.add(new Aptechka(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+        stories = new Array<StoryPlatform>();
+        for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            stories.add(new StoryPlatform(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
     }
 }
