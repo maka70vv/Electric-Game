@@ -25,6 +25,7 @@ public class WorldContactListener implements ContactListener {
         switch (cDef) {
             case ElectricGame.ELECTRIC_BIT | ElectricGame.LESTNITSA_BIT:
                 climb = true;
+                System.out.println(climb);
                 break;
             case ElectricGame.ELECTRIC_BIT | ElectricGame.END_MAP_BIT:
                 if (KanalizatiaScreen.kanalizatia)
