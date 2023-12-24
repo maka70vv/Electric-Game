@@ -1,0 +1,12 @@
+text.png
+size: 400, 24
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+IMG
+  rotate: false
+  xy: 0, 0
+  size: 400, 24
+  orig: 400, 24
+  offset: 0, 0
+  index: 302

@@ -30,6 +30,7 @@ public class MainScreen implements Screen {
     private final TextureAtlas atlasPers;
     private final TextureAtlas atlasJadro;
     private final TextureAtlas atlasBlueRobot;
+    private final TextureAtlas text;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -52,6 +53,7 @@ public class MainScreen implements Screen {
         atlasNadpis = new TextureAtlas("nadpis2.pack");
         atlasJadro = new TextureAtlas("yadro.pack");
         atlasBlueRobot = new TextureAtlas("blueRobot.pack");
+        text = new TextureAtlas("text.pack");
 
         main = true;
         KanalizatiaScreen.kanalizatia = false;
@@ -99,6 +101,9 @@ public class MainScreen implements Screen {
     }
     public TextureAtlas getAtlasBlueRobot(){
         return atlasBlueRobot;
+    }
+    public TextureAtlas getText(){
+        return text;
     }
 
 

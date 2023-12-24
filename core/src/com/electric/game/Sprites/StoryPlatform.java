@@ -25,7 +25,7 @@ public class StoryPlatform extends Enemy {
         currentFrameIndex = 0;
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlasRobot().findRegion("робот-надпись1"), i * 116, 0, 116, 48));
+            frames.add(new TextureRegion(screen.getText().findRegion("IMG"), i * 99, 0, 99, 24));
         flying = new Animation<TextureRegion>(0.4f, frames);
     }
 
@@ -72,8 +72,8 @@ public class StoryPlatform extends Enemy {
         setRegion(getFrame(dt));
         velocity.x = 0;
         velocity.y = 0;
-        setSize(1.16f, 0.48f);
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / ElectricGame.PPM);
+        setPosition(952f/ElectricGame.PPM, 110f/ ElectricGame.PPM);
+        setSize(1, 0.24f);
     }
 
     public void draw(Batch batch){
