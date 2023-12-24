@@ -16,12 +16,14 @@ public class KanalizationWorldCreator {
     private Array<Inoi> inoiRobots;
     private Array<JadroBlue> jadros;
     private Array<RobotBlue> robots;
+    private Array<ParallelStory> story;
 
     public Array<EnemyKanalizatia> getEnemiesKanalizatia(){
         Array<EnemyKanalizatia> enemiesKanalizatia = new Array<EnemyKanalizatia>();
         enemiesKanalizatia.addAll(inoiRobots);
         enemiesKanalizatia.addAll(jadros);
         enemiesKanalizatia.addAll(robots);
+        enemiesKanalizatia.addAll(story);
         return enemiesKanalizatia;
     }
 
@@ -79,6 +81,11 @@ public class KanalizationWorldCreator {
         for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             inoiRobots.add(new Inoi(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
+        }
+        story = new Array<ParallelStory>();
+        for(MapObject object:map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            story.add(new ParallelStory(screen, rect.x / ElectricGame.PPM, rect.y / ElectricGame.PPM));
         }
 
     }

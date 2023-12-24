@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="17" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="9">
+<map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="17" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="11">
  <tileset firstgid="1" name="1_Канализация" tilewidth="16" tileheight="16" tilecount="170" columns="17">
   <image source="1_Канализация.png" width="272" height="160"/>
  </tileset>
@@ -33,5 +33,8 @@
  </objectgroup>
  <objectgroup id="9" name="endOfMap">
   <object id="8" x="38.6941" y="-1.00987" width="16" height="4.25658"/>
+ </objectgroup>
+ <objectgroup id="10" name="story">
+  <object id="10" x="104.799" y="104.014" width="16" height="16"/>
  </objectgroup>
 </map>

@@ -30,6 +30,7 @@ public class KanalizatiaScreen implements Screen {
     private final TextureAtlas atlasJadro;
     private final TextureAtlas atlasRobot;
     private final TextureAtlas atlasBlueRobot;
+    private final TextureAtlas atlasStory;
     private final OrthographicCamera gameCam;
     private final Viewport gameport;
     private final TmxMapLoader mapLoader;
@@ -54,6 +55,7 @@ public class KanalizatiaScreen implements Screen {
         atlasJadro = new TextureAtlas("yadro.pack");
         atlasBlueRobot = new TextureAtlas("blueRobot.pack");
         atlasRobot = new TextureAtlas("robot.pack");
+        atlasStory = new TextureAtlas("parallelStory.pack");
 
 
 
@@ -99,6 +101,9 @@ public class KanalizatiaScreen implements Screen {
     }
     public TextureAtlas getAtlasBlueRobot(){
         return atlasBlueRobot;
+    }
+    public TextureAtlas getAtlasStory(){
+        return atlasStory;
     }
 
     @Override
