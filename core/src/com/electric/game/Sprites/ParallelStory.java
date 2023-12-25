@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.electric.game.ElectricGame;
 import com.electric.game.Screens.KanalizatiaScreen;
-import com.electric.game.Screens.MainScreen;
 
 public class ParallelStory extends EnemyKanalizatia {
     private float stateTime;
